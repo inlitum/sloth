@@ -1,22 +1,28 @@
 import { NgModule }     from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 import { HomeComponent }            from './home/home.component';
 import { PageNotFoundComponent }    from './page-not-found/page-not-found.component';
 import { FormsModule }              from '@angular/forms';
 import { BrowserModule }            from '@angular/platform-browser';
 import { SpotifyCallbackComponent } from './callback/spotify-callback/spotify-callback.component';
+import { CommonModule }             from '@angular/common';
+import { StartPageComponent }       from './start-pages/start-page/start-page.component';
+import { NotesComponent }           from './start-pages/notes/notes.component';
+import { SharedModule }             from '../shared/shared.module';
 
 @NgModule ({
     declarations: [
         HomeComponent,
         PageNotFoundComponent,
-        SpotifyCallbackComponent
+        SpotifyCallbackComponent,
+        StartPageComponent,
+        NotesComponent
     ],
     imports: [
         BrowserModule,
         CommonModule,
-        FormsModule
+        FormsModule,
+        SharedModule
     ]
 })
 export class ViewsModule {

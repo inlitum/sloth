@@ -1,4 +1,4 @@
-import { SpotifyAuth } from './spotify.auth';
+import { SpotifyAuth } from './spotifyCode';
 
 export interface UserData {
     spotifyAuth: SpotifyAuth;

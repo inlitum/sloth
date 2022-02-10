@@ -15,6 +15,10 @@ export class HttpService {
         return this._httpClient.post (url, body, options);
     }
 
+    public put (url: string, body: any, options: any): Observable<any> {
+        return this._httpClient.put (url, body, options);
+    }
+
     public get (url: string, options: any): Observable<any> {
         return this._httpClient.get (url, options);
     }

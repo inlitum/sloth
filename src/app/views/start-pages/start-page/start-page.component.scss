@@ -111,6 +111,77 @@ img {
     max-width      : 100%;
 }
 
+.spotify-bar {
+    margin-top: 10px;
+    width: 100%;
+}
+
+.controls {
+    width: 100%;
+
+    button {
+        border: none;
+        background: transparent;
+        color: $foreground-color;
+    }
+
+    button:hover {
+        background: rgba(0, 0, 0, 0.1);
+    }
+
+    button:focus {
+        background: rgba(0, 0, 0, 0.5);
+    }
+}
+
+.playing {
+    overflow: hidden;
+    white-space: nowrap;
+    margin-right: 15px;
+}
+
+.spotify-wrapper {
+    display: flex;
+    flex-direction: row;
+
+    .progress-wrapper {
+        margin-left: auto;
+        margin-right: 0;
+
+        display: flex;
+        flex-direction: row;
+
+        .spotify-progress {
+            display : block;
+
+            margin: 0 10px;
+        }
+
+        .spotify-progress[value] {
+            -webkit-appearance : none;
+
+            border             : 1px solid $foreground-color
+        }
+
+        .spotify-progress[value]::-webkit-progress-bar {
+            background-color : transparent;
+        }
+
+        .spotify-progress[value]::-webkit-progress-value {
+            background-color : $foreground-color;
+        }
+
+        .spotify-progress[value]::-moz-progress-bar {
+            background-color : rgba(196, 196, 201, 0.6);
+        }
+    }
+}
+
+.main-bar {
+    border: 1px solid $foreground-color;
+    height: 1rem;
+}
+
 .search-bar {
     height     : 1.5rem;
     border-top : 2px solid $foreground-color;

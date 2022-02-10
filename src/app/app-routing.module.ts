@@ -2,7 +2,7 @@ import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { HomeComponent }            from './views/home/home.component';
-import { StartPageComponent }       from './views/start-page/start-page.component';
+import { StartPageComponent }       from './views/start-pages/start-page/start-page.component';
 import { NotesComponent }           from './views/start-pages/notes/notes.component';
 import { SpotifyCallbackComponent } from './views/callback/spotify-callback/spotify-callback.component';
 
