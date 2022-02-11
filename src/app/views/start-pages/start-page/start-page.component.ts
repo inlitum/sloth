@@ -79,6 +79,11 @@ export class StartPageComponent implements OnInit, OnDestroy {
             side: 'left',
             items: [
                 {
+                    prefix: 'crd',
+                    text: 'board',
+                    link: 'https://youtrack.nsquared.nz/agiles/114-38/current'
+                },
+                {
                     prefix: 'bgs',
                     text: 'youtrack',
                     link: 'https://youtrack.nsquared.nz'
