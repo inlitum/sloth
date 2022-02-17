@@ -9,6 +9,7 @@ import { CommonModule }             from '@angular/common';
 import { StartPageComponent }       from './start-pages/start-page/start-page.component';
 import { NotesComponent }           from './start-pages/notes/notes.component';
 import { SharedModule }             from '../shared/shared.module';
+import { MemexComponent }           from './start-pages/memex/memex.component';
 
 @NgModule ({
     declarations: [
@@ -16,7 +17,8 @@ import { SharedModule }             from '../shared/shared.module';
         PageNotFoundComponent,
         SpotifyCallbackComponent,
         StartPageComponent,
-        NotesComponent
+        NotesComponent,
+        MemexComponent
     ],
     imports: [
         BrowserModule,

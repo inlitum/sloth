@@ -5,6 +5,7 @@ import { HomeComponent }            from './views/home/home.component';
 import { StartPageComponent }       from './views/start-pages/start-page/start-page.component';
 import { NotesComponent }           from './views/start-pages/notes/notes.component';
 import { SpotifyCallbackComponent } from './views/callback/spotify-callback/spotify-callback.component';
+import { MemexComponent }           from './views/start-pages/memex/memex.component';
 
 const routes: Routes = [
     {
@@ -22,6 +23,10 @@ const routes: Routes = [
             {
                 path: 'notes',
                 component: NotesComponent,
+            },
+            {
+                path: 'memex',
+                component: MemexComponent
             }
         ]
     },
