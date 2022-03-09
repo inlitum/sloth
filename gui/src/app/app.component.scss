@@ -1,0 +1,93 @@
+@use 'base';
+
+$app-width: 2.6rem;
+
+.main-wrapper {
+    height: 100%;
+    width: 100%;
+
+    @include base.theme;
+
+    display: flex;
+    align-items: center;
+}
+
+.app-options {
+    // ICONS
+    width: $app-width;
+    height: 100%;
+
+    background: #15191c;
+}
+
+.pages {
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.app-page-button {
+    margin-top: 1rem;
+    border: none;
+    background: transparent;
+    color: base.$foreground-color;
+    font-size: 1.5rem;
+}
+
+.last {
+    margin-top: auto;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.page-options  {
+    width: 20%;
+    height: 100%;
+    border-right: 1px solid base.$foreground-color;
+}
+
+.page-options.in {
+    display : none;
+}
+
+.content-wrapper {
+    height: 100%;
+    width: 100%;
+    display: grid;
+
+    grid-template-rows: 0.2rem 1fr;
+}
+
+.content {
+    width: 100%;
+    height: 100%;
+}
+
+.site-progress {
+    height: 0.2rem;
+    width: 100%;
+    background-color: transparent;
+    overflow: hidden;
+}
+
+.site-progress-custom {
+    height: 0.2rem;
+    width: 50%;
+    background-color: #cfe0f0;
+    position: relative;
+    left: -50%;
+    animation: loading 2s ease-in 0.5s infinite;
+}
+
+@keyframes loading {
+    0% {
+        transform:translateX(0)
+    }
+    to {
+        transform:translateX(400%)
+    }
+}

@@ -1,0 +1,31 @@
+<div class="main-wrapper">
+    <div class="blurb">
+        <h2>
+            Welcome!
+        </h2>
+
+        <p>
+            This is a temp home page.
+            <br>
+            <br>
+            Check out some of the pages on the right.
+        </p>
+
+        <button (click)="click()">click</button>
+    </div>
+    <div class="links">
+        <div class="header">
+            <div class="title">
+                pages
+            </div>{{ '{' }}
+        </div>
+        <ul>
+            <li *ngFor="let page of pages" class="link">
+                {{ page.prefix }}: <a [routerLink]="page.link">{{page.text}}</a>
+            </li>
+        </ul>
+        <div class="footer">
+            {{ '}' }}
+        </div>
+    </div>
+</div>

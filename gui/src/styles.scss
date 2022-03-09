@@ -1,0 +1,50 @@
+$border-color : #504945;
+
+:root {
+    --header-height    : 2rem;
+    --background-color : #1D2021;
+    --accent-color     : #32302F;
+    --foreground-color : #EBDBB2;
+    --border-color     : #504945;
+}
+
+html, body {
+    margin      : 0;
+    padding     : 0;
+
+    height      : 100%;
+    font-family : Arial, Helvetica, sans-serif;
+
+}
+
+.main-container {
+    height           : 100%;
+    width            : 100%;
+
+    background-color : var(--background-color);
+    color            : var(--foreground-color);
+}
+
+.title {
+    margin : 0;
+}
+
+/*
+BORDERS
+ */
+
+.b-l, .b-x, .b-a {
+    border-left : 1px solid $border-color;
+}
+
+.b-r, .b-x, .b-a {
+    border-right : 1px solid $border-color;
+}
+
+.b-t, .b-y, .b-a {
+    border-top : 1px solid $border-color;
+}
+
+.b-b, .b-y, .b-a {
+    border-bottom : 1px solid $border-color;
+}

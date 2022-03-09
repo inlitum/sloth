@@ -1,0 +1,17 @@
+{
+    "PAGES"     : {
+        "HOME"  : {
+            "TITLE"       : "",
+            "GO_TO_DETAIL": "Go to Detail"
+        },
+        "DETAIL": {
+            "TITLE"       : "Detail page !",
+            "BACK_TO_HOME": "Back to Home"
+        }
+    },
+    "COMPONENTS": {
+        "HEADER": {
+            "INVALID_USERNAME": "Invalid Username"
+        }
+    }
+}
