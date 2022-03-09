@@ -1,0 +1,10 @@
+$foreground-color : #a5a6a8;
+$background-color : #1b252f;
+$font             : 'Ubuntu Mono', monospace;
+
+@mixin theme() {
+    background: $background-color;
+    color: $foreground-color;
+
+    font-family: $font;
+}
