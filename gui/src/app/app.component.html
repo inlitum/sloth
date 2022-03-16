@@ -1,15 +1,21 @@
 <div class="main-wrapper">
     <div class="app-options">
         <div class="pages">
-            <a class="app-page-button" [routerLink]="page.link" *ngFor="let page of pages">
-                <i class="fa {{ page.icon }}"></i>
+            <a class="app-page-button" [routerLink]="''">
+                <i class="fa fa-house"></i>
+            </a>
+            <a class="app-page-button" [routerLink]="'pages/knowledge'">
+                <i class="fa fa-brain"></i>
+            </a>
+            <a class="app-page-button" [routerLink]="'pages/finances'">
+                <i class="fa fa-usd"></i>
             </a>
 
             <div class="last">
-                <a class="app-page-button" [routerLink]="'/account'">
+                <a class="app-page-button" [routerLink]="'pages/profile'">
                     <i class="fa fa-user" aria-hidden="true"></i>
                 </a>
-                <a class="app-page-button" [routerLink]="'/settings'">
+                <a class="app-page-button" [routerLink]="'pages/settings'">
                     <i class="fa fa-gear"></i>
                 </a>
             </div>

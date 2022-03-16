@@ -3,7 +3,6 @@ import { SlothBackendService }                  from '../sloth-backend.service';
 import { Account }                              from '../../types/finances/account.model';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { tap }                                  from 'rxjs/operators';
-import { HeaderService }                        from '../header.service';
 
 @Injectable ({
     providedIn: 'root'

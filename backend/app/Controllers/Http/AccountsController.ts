@@ -28,28 +28,26 @@ export default class AccountsController {
         return account;
     }
 
-    public async create ({ request, response }) {
+    public async create ({ auth, request, response }) {
         const accountSchema = schema.create ({
             name: schema.string ({}, [
                 rules.minLength (4)
             ]),
-            currentAmount: schema.number (),
-            creatorId: schema.number ()
+            currentAmount: schema.number ()
         });
 
         const payload = await request.validate ({ schema: accountSchema });
 
-        // Check if the user has been created
-        let user = await User.find (payload.creatorId);
+        let user = await User.find(auth.use('api').user.id);
 
         if (!user) {
-            return response.notFound ();
+            return response.unauthorized();
         }
 
         let account           = new Account ();
         account.name          = payload.name;
         account.currentAmount = payload.currentAmount;
-        account.creatorId     = payload.creatorId;
+        account.creatorId     = user.id;
 
         try {
             await account.save ();

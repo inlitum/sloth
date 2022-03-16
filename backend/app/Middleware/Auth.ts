@@ -52,8 +52,7 @@ export default class AuthMiddleware {
     throw new AuthenticationException(
       'Unauthorized access',
       'E_UNAUTHORIZED_ACCESS',
-      guardLastAttempted,
-      this.redirectTo,
+      guardLastAttempted
     )
   }
 

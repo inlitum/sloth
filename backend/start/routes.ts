@@ -38,4 +38,10 @@ Route.group(() => {
         Route.put ('transactions/:id', 'TransactionsController.update');
         Route.delete ('transactions/:id', 'TransactionsController.destroy');
     });
-}).prefix('api');
+
+}).middleware('auth:api').prefix('api');
+
+Route.group(() => {
+    Route.post ('login', 'AuthController.login');
+    Route.post ('register', 'AuthController.register');
+});

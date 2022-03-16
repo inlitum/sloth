@@ -1,6 +1,5 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { HeaderService }                                       from '../../../core/services/header.service';
-import { SpotifyService }                                      from '../../../core/services/spotify/spotify.service';
 import { PlayerState }                                         from '../../../core/types/spotify.types';
 import { Subscription }                                        from 'rxjs';
 
@@ -202,24 +201,14 @@ export class StartPageComponent implements OnInit, OnDestroy {
     // The subscription for spotify session, stored, so we can destroy this later.
     playerStateSubscription: Subscription | undefined;
 
-    constructor (private _headerService: HeaderService, private _spotifyService: SpotifyService) {
+    constructor (private _headerService: HeaderService) {
         // Set the title
         this._headerService.setPageName ('spooky start');
         // Get the current time, this is the setup date/time.
         let time  = new Date (Date.now ());
         this.time = time.toLocaleString ('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
         this.date = time.toLocaleDateString ('en-US', { year: 'numeric', month: 'long', day: '2-digit', weekday: 'long' });
-        // Spotify related stuff, this will change as I work on it further.
-        this._spotifyService.userSession$.subscribe ((session) => {
-            this.spotifyLoggedIn = !!session;
-            // If the spotify login worked.
-            if (session && session.authenticated) {
-                this.setupSpotifyCheck ();
-            }
-        });
-        if (_spotifyService.userSession?.authenticated) {
-            this._spotifyService.getPlaybackState ();
-        }
+
         // this._spotifyService.getPlaybackState();
     }
 
@@ -232,32 +221,7 @@ export class StartPageComponent implements OnInit, OnDestroy {
             this.date = time.toLocaleDateString ('en-US', { year: 'numeric', month: 'long', day: '2-digit', weekday: 'long' });
 
         }, 1000);
-        // Spotify player subscription
-        this.playerStateSubscription = this._spotifyService.currentPlayerState$.subscribe (state => {
-            if (state == null) {
-                return;
-            }
 
-            this.currentPlayerState = state;
-
-            let updatePeriod = false;
-
-            if (state.is_playing) {
-                if (this.spotifyIntervalPeriod === 'long') {
-                    updatePeriod               = true;
-                    this.spotifyIntervalPeriod = 'quick';
-                }
-            } else if (this.spotifyIntervalPeriod === 'quick') {
-                updatePeriod               = true;
-                this.spotifyIntervalPeriod = 'long';
-            }
-
-            if (updatePeriod) {
-                window.clearInterval (this.spotifyUpdateIntervalId);
-
-                this.setupSpotifyCheck ();
-            }
-        });
 
     }
 
@@ -278,21 +242,6 @@ export class StartPageComponent implements OnInit, OnDestroy {
         window.location.href = 'https://www.google.com/search?q=' + term;
     }
 
-    loginToSpotify () {
-        if (this.spotifyLoggedIn) {
-            return;
-        }
-
-        this._spotifyService.beginLogin ();
-    }
-
-    setupSpotifyCheck () {
-        this.spotifyUpdateIntervalId = window.setInterval (() => {
-            this._spotifyService.getPlaybackState ();
-        }, this.spotifyIntervalPeriod === 'quick' ? 1000 : 5000);
-
-    }
-
     /**
      * Converts Milliseconds to a mm:ss string
      * @param ms
@@ -302,26 +251,5 @@ export class StartPageComponent implements OnInit, OnDestroy {
         let seconds: number = (ms % 60000) / 1000;
 
         return minutes + ':' + (seconds < 10 ? '0' : '') + seconds.toFixed (0);
-    }
-
-    /**
-     * Simple wrapper function for all the spotify related button
-     * @param action
-     */
-    performAction (action: 'previous' | 'pause' | 'resume' | 'next') {
-        switch (action) {
-            case 'previous':
-                this._spotifyService.previousSong ();
-                break;
-            case 'pause':
-                this._spotifyService.pauseSong ();
-                break;
-            case 'resume':
-                this._spotifyService.startSong ();
-                break;
-            case 'next':
-                this._spotifyService.nextSong ();
-                break;
-        }
     }
 }

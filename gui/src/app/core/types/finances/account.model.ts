@@ -2,8 +2,8 @@ export class Account {
 
     private _id: number | undefined;
 
-    private _name: string | undefined;
-    private _currentAmount: number | undefined;
+    public name: string | undefined;
+    public currentAmount: number | undefined;
 
     private _creatorId: number | undefined;
     // private Creator
@@ -20,21 +20,21 @@ export class Account {
         this._id = value;
     }
 
-    get name (): string | undefined {
-        return this._name;
-    }
+    // get name (): string | undefined {
+    //     return this._name;
+    // }
+    //
+    // set name (value: string | undefined) {
+    //     this._name = value;
+    // }
 
-    set name (value: string | undefined) {
-        this._name = value;
-    }
-
-    get currentAmount (): number | undefined {
-        return this._currentAmount;
-    }
-
-    set currentAmount (value: number | undefined) {
-        this._currentAmount = value;
-    }
+    // get currentAmount (): number | undefined {
+    //     return this._currentAmount;
+    // }
+    //
+    // set currentAmount (value: number | undefined) {
+    //     this._currentAmount = value;
+    // }
 
     get creatorId (): number | undefined {
         return this._creatorId;

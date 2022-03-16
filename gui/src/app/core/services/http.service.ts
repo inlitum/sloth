@@ -11,19 +11,19 @@ export class HttpService {
     }
 
     //TODO Add T variable type as an option. Automatic json => class conversion
-    public post (url: string, body: any, options: any): Observable<any> {
-        return this._httpClient.post (url, body, options);
+    public post (url: string, body: any, headers: any): Observable<any> {
+        return this._httpClient.post (url, body, { 'headers': headers });
     }
 
-    public get (url: string, options: any): Observable<any> {
-        return this._httpClient.get (url, options);
+    public get (url: string, headers: any): Observable<any> {
+        return this._httpClient.get (url, { 'headers': headers });
     }
 
-    public put (url: string, body: any, options: any): Observable<any> {
-        return this._httpClient.put (url, body, options);
+    public put (url: string, body: any, headers: any): Observable<any> {
+        return this._httpClient.put (url, body, { 'headers': headers });
     }
 
-    public delete (url: string, options: any): Observable<any> {
-        return this._httpClient.delete(url, options);
+    public delete (url: string, headers: any): Observable<any> {
+        return this._httpClient.delete (url, { 'headers': headers });
     }
 }

@@ -7,6 +7,9 @@ export default class Transaction extends BaseModel {
     @column ({ isPrimary: true })
     public id: number;
 
+    @column()
+    public userId: number;
+
     @column ()
     public reason: string;
 
@@ -15,9 +18,6 @@ export default class Transaction extends BaseModel {
 
     @column()
     public directionIn: boolean;
-
-    @column()
-    public userId: number;
 
     @hasOne(() => User)
     public user: HasOne<typeof User>

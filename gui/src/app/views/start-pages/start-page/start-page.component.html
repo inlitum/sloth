@@ -32,29 +32,6 @@
                     <input #searchBar (keyup.enter)="onEnter(); searchBar.value = ''" class="search" placeholder="Search..." type="search">
                 </div>
             </div>
-            <div class="spotify-bar" *ngIf="spotifyLoggedIn">
-                <div class="logged-in-wrapper" *ngIf="spotifyLoggedIn && currentPlayerState">
-                    <div class="spotify-wrapper">
-                        <div class="playing">
-                            Currently Playing: {{ currentPlayerState.item.name }}
-                        </div>
-                        <div class="progress-wrapper" *ngIf="currentPlayerState.is_playing">
-                            {{ convertMsToMinutesAndSeconds (currentPlayerState.progress_ms) }}
-                            <progress class="spotify-progress" [value]="currentPlayerState.progress_ms" [max]="currentPlayerState.item.duration_ms"></progress>
-                            {{ convertMsToMinutesAndSeconds ( currentPlayerState.item.duration_ms ) }}
-                        </div>
-                    </div>
-                    <div class="controls">
-                        <button (click)="performAction('previous')">{{ '<' }}</button>
-                        <button (click)="performAction('pause')" *ngIf="currentPlayerState.is_playing">Pause</button>
-                        <button (click)="performAction('resume')" *ngIf="!currentPlayerState.is_playing">Resume</button>
-                        <button (click)="performAction('next')">{{ '>' }}</button>
-                    </div>
-                </div>
-                <div class="logged-out-wrapper" *ngIf="!spotifyLoggedIn">
-                    <button (click)="loginToSpotify()">Login to spotify</button>
-                </div>
-            </div>
         </div>
         <div class="right">
             <ng-template [ngForOf]="categories" let-category ngFor>

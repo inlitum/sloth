@@ -24,9 +24,7 @@ export default class User extends BaseModel {
     })
     public accounts: ManyToMany<typeof Account>;
 
-    @hasMany(() => Transaction, {
-
-    })
+    @hasMany(() => Transaction, {    })
     public transactions: HasMany<typeof Transaction>;
 
     @column.dateTime ({ autoCreate: true })
