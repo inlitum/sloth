@@ -1,13 +1,43 @@
 <div class="bank-account-wrapper" *ngIf="account">
     <div class="content">
-        <div class="image bank-item">
-            <img src="https://via.placeholder.com/350x200.png?text={{(account.name ? account.name : 'account') | urlify}}" alt="account-image">
-        </div>
-        <div class="account-name bank-item">
-            {{ account.name }}
-        </div>
+
         <div class="transactions">
-        
+            <div class="header">
+                <div class="title">
+                    Transactions
+                </div>
+                <div class="actions">
+                    <button class="transactions-actions">
+                        <i class="fa-solid fa-ellipsis"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="table"> <!-- TODO: Extract this into its own component -->
+                <div class="table-item sort-fields">
+                    <div class="table-column">
+                        Reason
+                    </div>
+                    <div class="table-column">
+                        Created
+                    </div>
+                    <div class="table-column last-column">
+                        Amount
+                    </div>
+                </div>
+                <div class="transactions-wrapper">
+                    <div class="table-item" *ngFor="let transaction of transactions">
+                        <div class="table-column">
+                            {{ transaction.reason }}
+                        </div>
+                        <div class="table-column">
+                            {{ transaction.createdAt | prettyDate}}
+                        </div>
+                        <div class="table-column last-column {{ transaction.deposit ? 'deposit' : 'withdrawal' }}">
+                            {{ (transaction.amount ? transaction.amount : 0) | dollar }}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

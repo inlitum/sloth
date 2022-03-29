@@ -39,6 +39,8 @@ export class HomeComponent implements OnInit {
         }
     ]
 
+    showModal: boolean = true;
+
     constructor (
         private detectChange: ChangeDetectorRef,
         private _accountService: AccountsService,
@@ -50,9 +52,7 @@ export class HomeComponent implements OnInit {
     }
 
     click () {
-        this._accountService.getAllAccounts().subscribe((t) => {
-            console.log(t)
-        });
+        this.showModal = true;
     }
 
 }

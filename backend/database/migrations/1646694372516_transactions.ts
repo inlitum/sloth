@@ -6,19 +6,21 @@ export default class Transactions extends BaseSchema {
     public async up () {
         this.schema.createTable (this.tableName, (table) => {
             table.increments ('id');
-            table.integer ('user_id').unsigned().references('users.id').onDelete('CASCADE').primary();
+            table.integer ('user_id').unsigned().references('users.id');
 
             table.string ('reason');
             table.float ('amount');
-            table.boolean ('direction_in');
-            table.integer ('account_id').unsigned().references('accounts.id');
+            table.boolean ('deposit');
+            table.integer ('account_id').unsigned();
 
             /**
              * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
              */
             table.timestamp ('created_at', { useTz: true });
             table.timestamp ('updated_at', { useTz: true });
-            table.unique(['id', 'user_id'])
+
+            table.primary(['id', 'user_id'])
+            table.foreign(['account_id', 'user_id']).references(['id', 'user_id']).inTable('accounts')
         });
     }
 

@@ -1,46 +1,56 @@
-export class Account {
+import { Transaction } from './transaction.model';
+import { Model }       from '../model';
 
-    private _id: number | undefined;
+export class Account extends Model {
 
-    public name: string | undefined;
-    public currentAmount: number | undefined;
+    private _id: number                     = 0;
+    private _name: string                   = '';
+    private _currentAmount: number          = 0;
+    private _userId: number                 = 0;
+    private _transactions: Transaction[]    = [];
 
-    private _creatorId: number | undefined;
-    // private Creator
-
-    // private _users: User[] = [];
-
-    // private _transactions: Transaction[] = [];
-
-    get id (): number | undefined {
+    get id (): number {
         return this._id;
     }
 
-    set id (value: number | undefined) {
+    set id (value: number) {
         this._id = value;
     }
 
-    // get name (): string | undefined {
-    //     return this._name;
-    // }
-    //
-    // set name (value: string | undefined) {
-    //     this._name = value;
-    // }
-
-    // get currentAmount (): number | undefined {
-    //     return this._currentAmount;
-    // }
-    //
-    // set currentAmount (value: number | undefined) {
-    //     this._currentAmount = value;
-    // }
-
-    get creatorId (): number | undefined {
-        return this._creatorId;
+    get name (): string {
+        return this._name;
     }
 
-    set creatorId (value: number | undefined) {
-        this._creatorId = value;
+    set name (value: string) {
+        this._name = value;
+    }
+
+    get currentAmount (): number {
+        return this._currentAmount;
+    }
+
+    set currentAmount (value: number) {
+        this._currentAmount = value;
+    }
+
+    get userId (): number {
+        return this._userId;
+    }
+
+    set userId (value: number) {
+        this._userId = value;
+    }
+
+    get transactions (): Transaction[] {
+        return this._transactions;
+    }
+
+    set transactions (value: Transaction[]) {
+        this._transactions = value;
+    }
+
+    constructor (data: { [ key: string ]: any }) {
+        super ();
+        this.processJson (data);
     }
 }

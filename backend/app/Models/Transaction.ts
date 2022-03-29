@@ -17,7 +17,7 @@ export default class Transaction extends BaseModel {
     public amount: number;
 
     @column()
-    public directionIn: boolean;
+    public deposit: boolean;
 
     @hasOne(() => User)
     public user: HasOne<typeof User>

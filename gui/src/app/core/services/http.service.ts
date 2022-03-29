@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Injectable }       from '@angular/core';
+import { HttpClient }       from '@angular/common/http';
+import { Observable }       from 'rxjs';
+import { ModelConstructor } from '../types/model';
 
 @Injectable ({
     providedIn: 'root'
@@ -15,8 +16,8 @@ export class HttpService {
         return this._httpClient.post (url, body, { 'headers': headers });
     }
 
-    public get (url: string, headers: any): Observable<any> {
-        return this._httpClient.get (url, { 'headers': headers });
+    public get<T> (url: string, resourceType: ModelConstructor<T>, headers: any): Observable<any> {
+        return this._httpClient.get<T> (url, { 'headers': headers });
     }
 
     public put (url: string, body: any, headers: any): Observable<any> {

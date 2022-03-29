@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountsService }   from '../../core/services/finances/accounts.service';
 import { Account }           from '../../core/types/finances/account.model';
+import { Router }            from '@angular/router';
 
 @Component ({
     selector: 'app-finances',
@@ -11,7 +12,10 @@ export class FinancesComponent implements OnInit {
 
     accounts: Account[] = [];
 
-    constructor (private _accountsService: AccountsService) {
+    constructor (
+        private _accountsService: AccountsService,
+        private _router: Router
+        ) {
         this._accountsService.accounts$
         .subscribe ((accounts) => {
             this.accounts = accounts;
@@ -24,6 +28,6 @@ export class FinancesComponent implements OnInit {
     }
 
     createNewAccount () {
-        console.log('finna create me a new account')
+        this._router.navigate(['pages/account/new'])
     }
 }

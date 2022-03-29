@@ -1,29 +1,38 @@
 import Account           from 'App/Models/Account';
 import { rules, schema } from '@ioc:Adonis/Core/Validator';
-import User              from 'App/Models/User';
 import { DateTime }      from 'luxon';
 
 export default class AccountsController {
 
-    public async index () {
-        return await Account.all ();
+    public async index ({ auth, request }) {
+        let offset = request.header('offset') || 1;
+        let perPage = request.header('perPage') || 10;
+        let orderBy = request.header('orderBy') || 'name';
+        let orderDirection = request.header('orderDirection') || 'asc';
+
+        let userId = auth.use('api').user.id;
+
+        return await Account
+            .query ()
+            .where ('user_id', userId)
+            .orderBy (orderBy, orderDirection)
+            .paginate (offset, perPage);
     }
 
-    public async show ({ request, response }) {
+    public async show ({ auth, request, response }) {
         let id = request.params ().id;
+        let userId = auth.use('api').user.id;
 
         let account = await Account
             .query()
             .from ('accounts')
             .where ('id', id)
-            .preload('users')
+            .where ('user_id', userId)
             .first();
 
         if (!account) {
             return response.notFound ();
         }
-
-        await account.load('transactions');
 
         return account;
     }
@@ -38,32 +47,26 @@ export default class AccountsController {
 
         const payload = await request.validate ({ schema: accountSchema });
 
-        let user = await User.find(auth.use('api').user.id);
+        let userId = auth.use('api').user.id;
 
-        if (!user) {
-            return response.unauthorized();
-        }
-
-        let account           = new Account ();
-        account.name          = payload.name;
-        account.currentAmount = payload.currentAmount;
-        account.creatorId     = user.id;
+        let account             = new Account ();
+        account.name            = payload.name;
+        account.currentAmount   = payload.currentAmount;
+        account.userId          = userId;
 
         try {
             await account.save ();
         } catch (e) {
             // Something went wrong here
+            console.log(e)
             return response.internalServerError ();
         }
-        // The account has been created. Time to create the user-account
-        await user.related('accounts').attach([account.id]);
 
         return account;
     }
 
-    public async update ({ request, response }) {
+    public async update ({ auth, request, response }) {
         const accountSchema = schema.create ({
-            accountId: schema.number (),
             name: schema.string ({}, [
                 rules.minLength (4)
             ]),
@@ -71,12 +74,14 @@ export default class AccountsController {
         });
 
         const payload = await request.validate ({ schema: accountSchema });
+        let accountId = request.params ().id;
+        let userId = auth.use('api').user.id;
 
-        if (payload.accountId != request.params ().id) {
-            return response.badRequest ();
-        }
-
-        let account = await Account.find (payload.accountId);
+        let account = await Account
+            .query()
+            .where('id', accountId)
+            .where('user_id', userId)
+            .first();
 
         if (!account) {
             return response.badRequest ();
@@ -96,21 +101,28 @@ export default class AccountsController {
         return account;
     }
 
-    public async destroy ({ request, response }) {
+    public async destroy ({ auth, request, response }) {
         let accountId = request.params().id;
+        let userId = auth.use('api').user.id;
 
-        let account = await Account.find(accountId);
+        let account = await Account
+            .query()
+            .where('id', accountId)
+            .where('user_id', userId)
+            .first();
 
-        if (account == null) {
+        if (!account) {
+            console.log(accountId, userId)
             return response.badRequest();
         }
 
-        await account.load('users');
+        await account.load('transactions');
 
         try {
-            for (let i = 0; i < account.users.length; i++) {
-                let user = account.users[i];
-                await account.related('users').detach([user.id]);
+            for (let i = account.transactions.length - 1; i >= 0; i--) {
+                let transaction = account.transactions[i];
+
+                await transaction.delete();
             }
         } catch (e) {
             return response.internalServerError();

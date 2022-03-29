@@ -8,12 +8,14 @@ export default class Accounts extends BaseSchema {
             table.increments ('id');
             table.string ('name');
             table.float ('current_amount');
-            table.integer ('creator_id').unsigned ().references ('users.id');
+            table.integer ('user_id').unsigned ().references ('users.id');
             /**
              * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
              */
             table.timestamp ('created_at', { useTz: true });
             table.timestamp ('updated_at', { useTz: true });
+
+            table.primary(['id', 'user_id'])
         });
     }
 

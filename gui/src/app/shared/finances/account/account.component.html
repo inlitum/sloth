@@ -11,8 +11,8 @@
         <div class="name">
             {{ account.name }}
         </div>
-        <div class="amount" *ngIf="account.currentAmount">
-            {{ account.currentAmount | dollar }}
+        <div class="amount">
+            {{ (account.currentAmount ? account.currentAmount : 0) | dollar }}
         </div>
     </div>
 </button>

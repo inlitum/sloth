@@ -1,25 +1,34 @@
 import { Injectable }                           from '@angular/core';
-import { HttpService }                          from './http.service';
-import { HttpClient, HttpHeaders }              from '@angular/common/http';
+import { HttpClient }                           from '@angular/common/http';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment }                          from '../../../environments/environment';
 import { HeaderService }                        from './header.service';
-import { tap }                                  from 'rxjs/operators';
+import { map, tap }                             from 'rxjs/operators';
 import { SlothUser }                            from '../types/user.data';
 import { Router }                               from '@angular/router';
 import { LocalStorageService }                  from './local-storage.service';
+import { ModelConstructor }                     from '../types/model';
+import { isObject as _isObject, isArray as _isArray }                 from 'lodash';
+
+export interface ParameterMap {
+    [ param: string ]: string | string[];
+}
+
+export class DataSet<T> {
+    data: Array<T> = new Array<T>();
+    count: number = 0;
+}
 
 @Injectable ({
     providedIn: 'root'
 })
-export class SlothBackendService extends HttpService {
+export class SlothBackendService {
 
+    public _isLoggedIn                   = false;
+    public isLoggedIn$: Subject<boolean> = new BehaviorSubject (this._isLoggedIn);
 
-    public _isLoggedIn = false;
-    public isLoggedIn$: Subject<boolean> = new BehaviorSubject(this._isLoggedIn);
-
-    private _backendUrl = '';
-    private isSetup     = false;
+    private _backendUrl           = '';
+    private isSetup               = false;
     private _backendToken: string = '';
 
     private returnUrl: string = '';
@@ -28,56 +37,95 @@ export class SlothBackendService extends HttpService {
                  private _headerService: HeaderService,
                  private _router: Router,
                  private _localStorageService: LocalStorageService) {
-        super (_httpClient);
     }
 
-    post (url: string, body: any, options: any): Observable<any> {
+    post (url: string, body: any, options: ParameterMap): Observable<any> {
         if (!this.isSetup) {
             this.setup ();
         }
         this._headerService.startLoadingForKey(url);
         options['Authorization'] = `Bearer ${this._backendToken}`;
-        return super.post (this._backendUrl + 'api/' + url, body, options)
-            .pipe(
-                tap (() => {
-                    this._headerService.stopLoadingForKey(url);
-                }, (error: any) => {
-                    this._headerService.stopLoadingForKey(url);
-                    this.handleError(error);
-                })
-            );
-    }
-
-    put (url: string, body: any, options: any): Observable<any> {
-        if (!this.isSetup) {
-            this.setup ();
-        }
-        this._headerService.startLoadingForKey(url);
-        options['Authorization'] = `Bearer ${this._backendToken}`;
-        return super.put (this._backendUrl + 'api/' + url, body, options)
-        .pipe(
+        return this._httpClient.post (this._backendUrl + 'api/' + url, body, { "headers": options })
+        .pipe (
             tap (() => {
-                this._headerService.stopLoadingForKey(url);
+                this._headerService.stopLoadingForKey (url);
             }, (error: any) => {
-                this._headerService.stopLoadingForKey(url);
-                this.handleError(error);
+                this._headerService.stopLoadingForKey (url);
+                this.handleError (error);
             })
         );
     }
 
-    get (url: string, options: any): Observable<any> {
+    put (url: string, body: any, options: ParameterMap): Observable<any> {
         if (!this.isSetup) {
             this.setup ();
         }
         this._headerService.startLoadingForKey(url);
         options['Authorization'] = `Bearer ${this._backendToken}`;
-        return super.get (this._backendUrl + 'api/' + url, options)
-        .pipe(
+        return this._httpClient.put (this._backendUrl + 'api/' + url, body, { "headers": options })
+        .pipe (
             tap (() => {
-                this._headerService.stopLoadingForKey(url);
+                this._headerService.stopLoadingForKey (url);
             }, (error: any) => {
-                this._headerService.stopLoadingForKey(url);
-                this.handleError(error);
+                this._headerService.stopLoadingForKey (url);
+                this.handleError (error);
+            })
+        );
+    }
+
+    getOne<T> (url: string, resourceType: ModelConstructor<T>, options: ParameterMap): Observable<any> {
+        if (!this.isSetup) {
+            this.setup ();
+        }
+        this._headerService.startLoadingForKey (url);
+        options[ 'Authorization' ] = `Bearer ${this._backendToken}`;
+        return this._httpClient.get<T> (this._backendUrl + 'api/' + url, { "headers": options })
+        .pipe (
+            map ((response: any) => {
+                if (!_isObject(response)) {
+                    return;
+                }
+
+                return new resourceType (response);
+            }),
+            tap (() => {
+                this._headerService.stopLoadingForKey (url);
+            }, (error: any) => {
+                this._headerService.stopLoadingForKey (url);
+                this.handleError (error);
+            })
+        );
+    }
+
+    getList<T> (url: string, resourceType: ModelConstructor<T>, options: ParameterMap): Observable<DataSet<T>> {
+        if (!this.isSetup) {
+            this.setup ();
+        }
+        this._headerService.startLoadingForKey (url);
+        options[ 'Authorization' ] = `Bearer ${this._backendToken}`;
+        return this._httpClient.get<Array<T>> (this._backendUrl + 'api/' + url, { "headers": options })
+        .pipe (
+            map ((response: any) => {
+                let recordCount = response['meta'].total;
+
+                const records: Array<T> = [];
+
+                response.data.forEach ((record: { [key: string]: any; }) => {
+                    records.push (new resourceType (record));
+                })
+
+                let d: DataSet<T> = {
+                    data: records,
+                    count: recordCount
+                };
+
+                return d;
+            }),
+            tap (() => {
+                this._headerService.stopLoadingForKey (url);
+            }, (error: any) => {
+                this._headerService.stopLoadingForKey (url);
+                this.handleError (error);
             })
         );
     }
@@ -88,13 +136,13 @@ export class SlothBackendService extends HttpService {
         }
         this._headerService.startLoadingForKey(url);
         options['Authorization'] = `Bearer ${this._backendToken}`;
-        return super.delete (this._backendUrl + 'api/' + url, options)
-        .pipe(
+        return this._httpClient.delete (this._backendUrl + 'api/' + url, { "headers": options })
+        .pipe (
             tap (() => {
-                this._headerService.stopLoadingForKey(url);
+                this._headerService.stopLoadingForKey (url);
             }, (error: any) => {
-                this._headerService.stopLoadingForKey(url);
-                this.handleError(error);
+                this._headerService.stopLoadingForKey (url);
+                this.handleError (error);
             })
         );
     }
@@ -152,27 +200,27 @@ export class SlothBackendService extends HttpService {
         if (this.isLoggedIn || this._backendToken) {
             this.isLoggedIn = true;
 
-            this._router.navigate([this.returnUrl ? this.returnUrl : '']).then(() => {
+            this._router.navigate ([ this.returnUrl ? this.returnUrl : '' ]).then (() => {
                 this.returnUrl = '';
-            })
+            });
 
-            console.log('Already logged in')
+            console.log ('Already logged in');
             return;
         }
 
-        this._headerService.startLoadingForKey('login');
-        super.post(this._backendUrl + 'login', loginData, new HttpHeaders())
-            .subscribe((result) => {
-                this._headerService.stopLoadingForKey('login');
-                this.isLoggedIn = true;
-                this._backendToken = result.token;
+        this._headerService.startLoadingForKey ('login');
+        this._httpClient.post (this._backendUrl + 'login', loginData)
+        .subscribe ((result: any) => {
+            this._headerService.stopLoadingForKey ('login');
+            this.isLoggedIn    = true;
+            this._backendToken = result.token;
 
-                this._localStorageService.set('login-token', result.token);
+            this._localStorageService.set ('login-token', result.token);
 
-                this._router.navigate([this.returnUrl]).then(() => {
-                    this.returnUrl = '';
-                });
-            }, () => {
+            this._router.navigate ([ this.returnUrl ]).then (() => {
+                this.returnUrl = '';
+            });
+        }, () => {
                 this._headerService.stopLoadingForKey('login');
             });
     }

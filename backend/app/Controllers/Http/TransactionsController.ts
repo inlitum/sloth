@@ -1,92 +1,91 @@
 // import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 import Transaction  from 'App/Models/Transaction';
-import User         from 'App/Models/User';
 import { schema }   from '@ioc:Adonis/Core/Validator';
 import { DateTime } from 'luxon';
 
 export default class TransactionsController {
 
-    public async index ({ response }) {
-        let transactions = await Transaction.all();
-        return response.ok(transactions);
-    }
+    /**
+     * Get all transactions for either account or user
+     * @param auth
+     * @param request The request can have an account_id param.
+     * @param response
+     */
+    public async index ({ auth, request, response, logger }) {
+        let accountId = request.params ()[ 'account_id' ];
+        let userId = auth.use ('api').user.id;
+        // Generic pagination header stuff
+        let offset = request.header('offset') || 1;
+        let perPage = request.header('perPage') || 10;
+        let orderBy = request.header('orderBy') || 'reason';
+        let orderDirection = request.header('orderDirection') || 'asc';
 
-    public async show ({ request, response }) {
-        let id = request.params().id;
+        if (accountId) {
+            let transactions = await Transaction
+            .query ()
+            .where ('account_id', accountId)
+            .orderBy (orderBy, orderDirection)
+            .paginate (offset, perPage);
 
-        let transaction = await Transaction.find(id);
+            logger.info()
 
-        if ( !transaction ) {
-            return response.notFound();
+            return response.ok (transactions);
         }
 
-        return response.ok(transaction);
+        // To reach this point the request must have a valid login.
+        // If there is no account id then the request must be the user's transactions
+        let transactions = await Transaction
+        .query ()
+        .where ('user_id', userId)
+        .orderBy (orderBy, orderDirection)
+        .paginate (offset, perPage);
+        return response.ok (transactions);
     }
 
-    public async create ({ request, response }) {
-        const transactionSchema = schema.create ({
-            reason: schema.string (),
-            amount: schema.number (),
-            "account_id": schema.number (),
-            "direction_in": schema.boolean (),
-            userId: schema.number ()
-        });
-        const payload = await request.validate ({ schema: transactionSchema });
-        let user = await User.find (payload.userId);
+    /**
+     * Shows the one transaction, this may not be needed but good to have just in case.
+     * @param auth
+     * @param request
+     * @param response
+     */
+    public async show ({ auth, request, response }) {
+        let id = request.params ().id;
+        let accountId = request.params()['account_id'];
 
-        if (!user) {
+        let transaction = await Transaction
+        .query ()
+        .where ('id', id)
+        .where ('account_id', accountId)
+        .where ('user_id', auth.use ('api').user.id)
+        .first ();
+
+        if (!transaction) {
             return response.notFound ();
         }
 
-        let transaction         = new Transaction ();
-        transaction.reason      = payload.reason;
-        transaction.amount      = payload.amount;
-        transaction.directionIn = payload["direction_in"];
-        transaction.accountId   = payload["account_id"];
-        transaction.userId      = payload.userId;
-
-        try {
-            await transaction.save ();
-        } catch (e) {
-            return response.internalServerError ();
-        }
-
-        return transaction;
+        return response.ok (transaction);
     }
 
-    public async update ({ request, response }) {
+    public async create ({ auth, request, response }) {
+        let userId = auth.use ('api').user.id;
+        let accountId = request.params()['account_id'];
+
         const transactionSchema = schema.create ({
-            id: schema.number(),
             reason: schema.string (),
             amount: schema.number (),
-            "account_id": schema.number (),
-            "direction_in": schema.boolean ()
+            deposit: schema.boolean ()
         });
 
-        let payload;
+        const payload = await request.validate ({ schema: transactionSchema });
 
-        try {
-            payload = await request.validate ({ schema: transactionSchema });
-        } catch (e) {
-            return response.internalServerError (e);
-        }
+        let transaction       = new Transaction ();
+        transaction.reason    = payload.reason;
+        transaction.amount    = payload.amount;
+        transaction.deposit   = payload.deposit;
 
-        if (payload.id != request.params().id) {
-            return response.badRequest();
-        }
-
-        let transaction = await Transaction.find(payload.id);
-
-        if ( !transaction ) {
-            return response.notFound();
-        }
-
-        transaction.reason = payload.reason;
-        transaction.amount = payload.amount;
-        transaction.accountId = payload.accountId;
-        transaction.directionIn = payload.directionIn;
-        transaction.updatedAt = DateTime.now();
+        transaction.accountId = accountId;
+        transaction.userId    = userId;
 
         try {
             await transaction.save ();
@@ -97,19 +96,64 @@ export default class TransactionsController {
         return transaction;
     }
 
-    public async destroy ({ request, response }) {
-        let id = request.params().id;
+    public async update ({ auth, request, response }) {
+        let id     = request.params ().id;
+        let userId = auth.use ('api').user.id;
+        let accountId = request.params()['account_id'];
 
-        let transaction = await Transaction.find(id);
+        const transactionSchema = schema.create ({
+            reason: schema.string (),
+            amount: schema.number (),
+            deposit: schema.boolean ()
+        });
 
-        if ( !transaction ) {
-            return response.notFound();
+        let payload = await request.validate ({ schema: transactionSchema });
+
+        let transaction = await Transaction
+        .query ()
+        .where ('id', id)
+        .where ('account_id', accountId)
+        .where ('user_id', userId)
+        .first ();
+
+        if (!transaction) {
+            return response.notFound ();
+        }
+
+        transaction.reason    = payload.reason;
+        transaction.amount    = payload.amount;
+        transaction.deposit   = payload.deposit;
+        transaction.updatedAt = DateTime.now ();
+
+        try {
+            await transaction.save ();
+        } catch (e) {
+            return response.internalServerError ();
+        }
+
+        return transaction;
+    }
+
+    public async destroy ({ auth, request, response }) {
+        let id     = request.params ().id;
+        let userId = auth.use ('api').user.id;
+        let accountId = request.params()['account_id'];
+
+        let transaction = await Transaction
+        .query ()
+        .where ('id', id)
+        .where ('account_id', accountId)
+        .where ('user_id', userId)
+        .first ();
+
+        if (!transaction) {
+            return response.notFound ();
         }
 
         try {
-            await transaction.delete();
+            await transaction.delete ();
         } catch (e) {
-            return response.internalServerError()
+            return response.internalServerError ();
         }
 
         return id;

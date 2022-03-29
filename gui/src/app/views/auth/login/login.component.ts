@@ -21,32 +21,11 @@ export class LoginComponent implements OnInit {
     }
 
     login () {
-        let loginData: SlothUser = new SlothUser();
+        let loginData: SlothUser = new SlothUser ();
 
-        loginData.email = 'jackborrie@hotmail.com';
+        loginData.email    = 'jackborrie@hotmail.com';
         loginData.password = 'su';
 
         this._slothBackend.login (loginData);
     }
-
-    get () {
-        this._accountsService.getAllAccounts()
-            .subscribe(accounts => {
-                console.log(accounts);
-            })
-    }
-
-    create () {
-        let account = new Account();
-        account.name = "Everyday";
-        account.currentAmount = 1012.80;
-
-        this._accountsService.createAccount(account)
-            .subscribe((response) => {
-                console.log(response);
-                this.get();
-            });
-    }
-
-
 }

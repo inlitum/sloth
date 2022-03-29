@@ -1,5 +1,5 @@
 import { DateTime }                                                            from 'luxon';
-import { BaseModel, column, HasMany, hasMany, hasOne, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm';
+import { BaseModel, column, HasMany, hasMany, hasOne } from '@ioc:Adonis/Lucid/Orm';
 import { HasOne }                                                              from '@adonisjs/lucid/build/src/Factory/Relations/HasOne';
 import User                                                                    from 'App/Models/User';
 import Transaction                                                             from 'App/Models/Transaction';
@@ -15,16 +15,11 @@ export default class Account extends BaseModel {
     public currentAmount: number;
 
     @column ()
-    public creatorId: number;
+    public userId: number;
 
     @hasOne (() => User)
     // @ts-ignore
-    public creator: HasOne<typeof User>;
-
-    @manyToMany(() => User, {
-        pivotTable: 'user_accounts'
-    })
-    public users: ManyToMany<typeof User>;
+    public user: HasOne<typeof User>;
 
     @hasMany(() => Transaction)
     public transactions: HasMany<typeof Transaction>;
