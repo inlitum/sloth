@@ -3,8 +3,9 @@
     "version": "0.0.0",
     "scripts": {
         "ng": "ng",
-        "start": "ng serve --base-href /sloth/",
-        "build": "ng build --base-href /sloth/",
+        "start": "ng serve",
+        "build": "ng build",
+        "build-prod": "ng build --configuration production",
         "deploy": "npm run build && ng deploy --base-href /sloth/",
         "watch": "ng build --watch --configuration development",
         "test": "ng test"
