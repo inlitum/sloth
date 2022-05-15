@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    apiServer: 'api.inlitum.dev'
+    apiServer: 'https://api.inlitum.dev/'
 };
