@@ -2,22 +2,19 @@ import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
-import { FinanceModule } from "./finance/finance.module";
-import { HomeComponent } from "./home/home.component";
+import { ComponentsModule } from "src/app/components/components.module";
+import { BankAccountsComponent } from "./bank-accounts/bank-accounts.component";
 
 @NgModule ({
     declarations: [
-        HomeComponent
+        BankAccountsComponent
     ],
     exports: [
-        HomeComponent
+        BankAccountsComponent
     ],
     imports: [
-        CommonModule,
-        FormsModule,
-        RouterModule,
-        FinanceModule
+        ComponentsModule
     ]
 })
-export class ViewsModule {
+export class FinanceModule {
 }

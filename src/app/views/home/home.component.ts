@@ -1,8 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router }                               from '@angular/router';
-import { SlothBackendService }                  from '../../core/services/sloth-backend.service';
-import { HttpService }                          from '../../core/services/http.service';
-import { AccountsService }                      from '../../core/services/finances/accounts.service';
 
 export interface Link {
     prefix: string,
@@ -43,7 +40,6 @@ export class HomeComponent implements OnInit {
 
     constructor (
         private detectChange: ChangeDetectorRef,
-        private _accountService: AccountsService,
         private router: Router) {
 
     }

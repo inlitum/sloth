@@ -1,0 +1,53 @@
+@use '../../base';
+
+/* MODAL STYLES
+-------------------------------*/
+.sloth-modal {
+    /* modals are hidden by default */
+    // display: none;
+    /* modal container fixed across whole screen */
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    /* z-index must be higher than .jw-modal-background */
+    z-index: 1000;
+    
+    /* enables scrolling for tall modals */
+    overflow: auto;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .sloth-modal-body {
+        width: 50%;
+        z-index: 1002;
+    }
+
+    .sloth-modal-border {
+        z-index: 1001;
+    }
+}
+
+.sloth-modal-background {
+    /* modal background fixed across whole screen */
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    /* semi-transparent black  */
+    background-color: #000;
+    opacity: 0.75;
+    
+    /* z-index must be below .jw-modal and above everything else  */
+    z-index: 900;
+}
+
+.svgPath {
+    fill: base.$background-color;
+}

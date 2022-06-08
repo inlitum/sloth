@@ -1,0 +1,13 @@
+<div #modalWrapper>
+    <!-- <div class="sloth-modal-background"></div> -->
+    <div class="sloth-modal">
+        <div #modalBackground class="sloth-modal-background"></div>
+        <div #modalBody class="sloth-modal-body">
+            <button #closeButton (click)="hideModal()" class="sloth-icon-button">
+                <i class="fas fa-x"></i>
+            </button>
+            <ng-content></ng-content>
+        </div>
+        <div #modalBorder class="sloth-modal-border"></div>
+    </div>
+</div>

@@ -1,11 +1,7 @@
-$border-color : #504945;
+@use "./app/base";
 
 :root {
     --header-height    : 2rem;
-    --background-color : #1D2021;
-    --accent-color     : #32302F;
-    --foreground-color : #EBDBB2;
-    --border-color     : #504945;
 }
 
 html, body {
@@ -21,30 +17,48 @@ html, body {
     height           : 100%;
     width            : 100%;
 
-    background-color : var(--background-color);
-    color            : var(--foreground-color);
+    background-color : base.$background-color;
+    color            : base.$foreground-color;
 }
 
 .title {
     margin : 0;
 }
 
-/*
-BORDERS
- */
 
-.b-l, .b-x, .b-a {
-    border-left : 1px solid $border-color;
+// Buttons
+
+.sloth-button {
+  border: 1px solid base.$foreground-color;
+  background: transparent;
+  color: base.$foreground-color;
 }
 
-.b-r, .b-x, .b-a {
-    border-right : 1px solid $border-color;
+.sloth-button:hover {
+  background: rgba(0,0,0,0.2);
 }
 
-.b-t, .b-y, .b-a {
-    border-top : 1px solid $border-color;
+.sloth-button:active {
+  background: rgba(0,0,0,0.4);
 }
 
-.b-b, .b-y, .b-a {
-    border-bottom : 1px solid $border-color;
+.sloth-icon-button {
+  border: 0;
+  background: transparent;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  color: base.$foreground-color;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sloth-icon-button:hover {
+  background: rgba(0,0,0,0.2);
+}
+
+.sloth-icon-button:active {
+  background: rgba(0,0,0,0.4);
 }

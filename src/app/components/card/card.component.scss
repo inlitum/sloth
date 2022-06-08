@@ -1,0 +1,8 @@
+@use '../../base';
+
+.sloth-card-wrapper {
+    background: transparent;
+    border: 1px solid base.$foreground-color;
+
+    height: 100%;
+}
