@@ -4,7 +4,7 @@ export class Account extends Model {
 
     private _id: number                     = 0;
     private _name: string                   = '';
-    private _currentAmount: number          = 0;
+    private _initialBalance: number          = 0;
     private _userId: number                 = 0;
     // private _transactions: Transaction[]    = [];
 
@@ -24,12 +24,12 @@ export class Account extends Model {
         this._name = value;
     }
 
-    get currentAmount (): number {
-        return this._currentAmount;
+    get initialBalance (): number {
+        return this._initialBalance;
     }
 
-    set currentAmount (value: number) {
-        this._currentAmount = value;
+    set initialBalance (value: number) {
+        this._initialBalance = value;
     }
 
     get userId (): number {

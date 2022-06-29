@@ -8,10 +8,14 @@ import { ViewsModule } from './views/views.module';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { ComponentsModule } from './components/components.module';
+import { SlothColumnNameDirective } from './directives/sloth-column-name.directive';
+import { PrettyCurrencyPipe } from './pipes/pretty-currency.pipe';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SlothColumnNameDirective,
+    PrettyCurrencyPipe
   ],
   imports: [
     BrowserModule,
@@ -20,7 +24,7 @@ import { ComponentsModule } from './components/components.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     ViewsModule,
-    ComponentsModule,
+    ComponentsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

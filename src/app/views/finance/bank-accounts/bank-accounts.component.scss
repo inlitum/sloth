@@ -1,0 +1,46 @@
+.accounts-card-wrapper {
+    height: 100%;
+    display: grid;
+    grid-template-rows: 42px 1fr;
+}
+
+.accounts-card-content {
+    display: grid;
+    grid-template-rows: 33px 1fr;
+}
+
+.content-wrapper {
+    height: 100%;
+}
+
+.accounts {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr) ) ;
+}
+
+.account {
+    height: 200px;
+    width: 320px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    justify-self: center;
+
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    background: rgba(0,0,0,0.2);
+    cursor: pointer
+}
+
+.account:hover {
+    background: rgba(0,0,0,0.3);
+}
+
+.account:active {
+    background: rgba(0,0,0,0.4);
+}

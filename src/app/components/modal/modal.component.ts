@@ -137,6 +137,8 @@ export class ModalComponent implements OnInit, AfterViewInit {
     if (!this.showBackground) {
       this._renderer2.setAttribute(this.modalBackground.nativeElement, 'style', `display: none;`);
     }
+
+    this.hideModal();
   }
 
   ngOnInit(): void {

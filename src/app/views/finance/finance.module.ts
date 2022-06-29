@@ -1,8 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { FormsModule } from "@angular/forms";
-import { RouterModule } from "@angular/router";
 import { ComponentsModule } from "src/app/components/components.module";
+import { PrettyCurrencyPipe } from "src/app/pipes/pretty-currency.pipe";
 import { BankAccountsComponent } from "./bank-accounts/bank-accounts.component";
 
 @NgModule ({
@@ -12,7 +11,11 @@ import { BankAccountsComponent } from "./bank-accounts/bank-accounts.component";
     exports: [
         BankAccountsComponent
     ],
+    providers: [
+        PrettyCurrencyPipe
+    ],
     imports: [
+        CommonModule,
         ComponentsModule
     ]
 })

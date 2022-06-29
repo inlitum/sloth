@@ -5,11 +5,11 @@ import { ModalComponent } from './modal/modal.component';
 @NgModule ({
     declarations: [
         CardComponent,
-        ModalComponent
+        ModalComponent,
     ],
     exports: [
         CardComponent,
-        ModalComponent
+        ModalComponent,
     ],
     imports: [
     ]

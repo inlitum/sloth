@@ -1,21 +1,39 @@
 <ng-container>
     <div class="h-100 d-flex justify-content-center align-items-center py-4">
         <sloth-card class="w-100 h-100 mx-4">
-            <!-- Accounts Table -->
-            <div class="d-flex flex-direction-row">
-                <h2>
-                    <!-- Title -->
-                    Accounts
-                </h2>
-                <div class="ms-auto me-0">
-                    <!-- Actions -->
-                    <button (click)="createAccount()" class="h-100 sloth-button px-2">
-                        Create 
-                        <i class="fas fa-plus"></i>
-                    </button>
+            <div class="accounts-card-wrapper">
+                <!-- Accounts Table -->
+                <div class="d-flex flex-direction-row">
+                    <h2>
+                        <!-- Title -->
+                        Accounts
+                    </h2>
+                    <div class="ms-auto me-0">
+                        <!-- Actions -->
+                        <button (click)="createAccount()" class="h-100 sloth-button px-2">
+                            Create 
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="accounts-card-content">
+                    <hr>
+                    <div #contentWrapper class="content-wrapper">
+                        <ng-container *ngIf="layoutType == 'grid'">
+                            <div #gridContainer class="grid-container">
+                                <div class="accounts">
+                                    <ng-container *ngIf="loaded">
+                                        <div class="account" (click)="openAccount(account.id)" *ngFor="let account of accounts">
+                                            <h5>{{ account.name }}</h5>
+                                            <h6>{{ account.initialBalance }}</h6>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
                 </div>
             </div>
-
         </sloth-card>
     </div>
 </ng-container>
