@@ -3,31 +3,12 @@
         <h2>
             Welcome!
         </h2>
-
+        <hr>
         <p>
-            This is a temp home page.
+            Nothing to see here...
             <br>
             <br>
-            Check out some of the pages on the right.
+            Under-construction
         </p>
-
-        <button (click)="click()">click</button>
-    </div>
-    <div class="links">
-        <div class="header">
-            <div class="title">
-                pages
-            </div>{{ '{' }}
-        </div>
-        <ul>
-            <li *ngFor="let page of pages" class="link">
-                {{ page.prefix }}: <a [routerLink]="page.link">{{page.text}}</a>
-            </li>
-        </ul>
-        <div class="footer">
-            {{ '}' }}
-        </div>
     </div>
 </div>
-
-<!-- <app-modal *ngIf="showModal"></app-modal> -->

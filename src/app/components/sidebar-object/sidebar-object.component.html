@@ -1,0 +1,29 @@
+<ng-container *ngIf="object">
+    <div class="sidebar-object-container {{lastItem && !child ? 'last-item' : ''}}">
+        <div class="content-container">
+            <div class="{{ (object.children || []).length > 0 ? 'parent-content-wrapper' : 'content-wrapper' }}">
+                <div class="wrapper {{ object.link || object.callback ? 'sidebar-clickable' : ''}}" (click)="handleContentClick()">
+                    <div class="icon-wrapper" *ngIf="object.icon">
+                        <i class="sidebar-icon fa {{object.icon}}"></i>
+                    </div>
+                    <div class="text-wrapper">
+                        <div class="inner-text">
+                            {{object.name}}
+                        </div>
+                    </div>
+                </div>
+                <div class="dropdown-wrapper" *ngIf="(object.children || []).length > 0">
+                    <button class="sidebar-dropdown-button sidebar-clickable" (click)="toggleChildren()">
+                        <i class="sidebar-icon fa fa-angle-down" *ngIf="showChildren"></i>
+                        <i class="sidebar-icon fa fa-angle-right" *ngIf="!showChildren"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="{{!child && !lastItem ? 'children-container' : child && !lastItem ? 'child-children-container' : ''}}" *ngIf="object.children && object.children.length > 0 && showChildren">
+            <ng-container *ngFor="let child of object.children; let idx = index;">
+                <app-sidebar-object [object]="child" [child]="true" [lastItem]="object.children.length - 1 === idx"></app-sidebar-object>
+            </ng-container>
+        </div>
+    </div>
+</ng-container>

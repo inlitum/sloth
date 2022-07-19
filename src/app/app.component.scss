@@ -81,7 +81,7 @@
 .site-progress-custom {
     height: 0.2rem;
     width: 50%;
-    background-color: #cfe0f0;
+    background-color: base.$foreground-color;
     position: relative;
     left: -50%;
     animation: loading 2s ease-in 0.5s infinite;

@@ -15,7 +15,7 @@ import { PrettyCurrencyPipe } from './pipes/pretty-currency.pipe';
   declarations: [
     AppComponent,
     SlothColumnNameDirective,
-    PrettyCurrencyPipe
+    PrettyCurrencyPipe,
   ],
   imports: [
     BrowserModule,

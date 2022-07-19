@@ -1,0 +1,48 @@
+@use "../../../base";
+
+.admin-dashboard {
+    width: 100%;
+    height: 100%;
+
+    display: grid;
+    grid-template-columns: 200px auto;
+}
+
+.admin-dashboard-sidebar {
+    width: 100%;
+    height: 100%;
+    border-right: 1px solid base.$foreground-color;
+}
+
+.admin-sidebar-wrapper {
+    display: flex;
+    flex-direction: column;
+
+    overflow-y: auto;
+
+    //grid-template-rows: 50px 100%;
+}
+
+.admin-sidebar-header {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 1.5rem;
+    border-bottom: 1px solid base.$foreground-color;
+}
+
+.admin-dashboard-sidebar {
+    width: 100%;
+    height: 100%;
+}
+
+.admin-sidebar-options {
+    overflow-y: auto;
+}
+
+.last-object {
+    border-bottom: 1px solid base.$foreground-color;
+}
