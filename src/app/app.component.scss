@@ -63,7 +63,7 @@
 
     margin-left: base.$sidebar-width;
 
-    grid-template-rows: 0.2rem 1fr;
+    grid-template-rows: 1fr;
 }
 
 .content {
@@ -72,6 +72,7 @@
 }
 
 .site-progress {
+    position: fixed;
     height: 0.2rem;
     width: 100%;
     background-color: transparent;

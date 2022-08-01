@@ -1,19 +1,46 @@
 <div class="admin-dashboard">
-    <div class="admin-dashboard-sidebar">
-        <div #adminSidebarWrapper>
-            <div class="admin-sidebar-header">
-                Admin Area
-            </div>
-            <div class="admin-sidebar-options">
-                <ng-container *ngIf="adminSidebarStructure && adminSidebarStructure.content">
-                    <ng-container *ngFor="let sidebarObject of adminSidebarStructure.content; let idx=index;">
-                        <app-sidebar-object [object]="sidebarObject" [lastItem]="idx === adminSidebarStructure.content.length - 1"></app-sidebar-object>
-                    </ng-container>
-                </ng-container>
-            </div>
+  <div class="admin-dashboard-sidebar">
+    <div #adminSidebarWrapper>
+      <div class="admin-sidebar-header">
+        Admin Area
+      </div>
+      <div class="admin-sidebar-options">
+        <!-- Users -->
+        <div class="admin-sidebar-link sidebar-clickable" [routerLink]="'users'">
+          <div class="admin-sidebar-link-icon">
+            <i class="fa-solid fa-users"></i>
+          </div>
+          <div class="admin-sidebar-link-text">
+            Users
+          </div>
         </div>
+        <!-- Groups -->
+        <div class="admin-sidebar-link sidebar-clickable" [routerLink]="'groups'">
+          <div class="admin-sidebar-link-icon">
+            <i class="fa-solid fa-user-gear"></i>
+          </div>
+          <div class="admin-sidebar-link-text">
+            Groups
+          </div>
+        </div>
+        <!-- User Groups -->
+        <div class="admin-sidebar-link sidebar-clickable" [routerLink]="'user-groups'">
+          <div class="admin-sidebar-link-icon">
+            <i class="fa-solid fa-user-group"></i>
+          </div>
+          <div class="admin-sidebar-link-text">
+            User Groups
+          </div>
+        </div>
+        <!--                <ng-container *ngIf="adminSidebarStructure && adminSidebarStructure.content">-->
+        <!--                    <ng-container *ngFor="let sidebarObject of adminSidebarStructure.content; let idx=index;">-->
+        <!--                        <app-sidebar-object [object]="sidebarObject" [lastItem]="idx === adminSidebarStructure.content.length - 1"></app-sidebar-object>-->
+        <!--                    </ng-container>-->
+        <!--                </ng-container>-->
+      </div>
     </div>
-    <div #adminDashboardContent class="admin-dashboard-content">
-        <router-outlet></router-outlet>
-    </div>
+  </div>
+  <div #adminDashboardContent class="admin-dashboard-content">
+    <router-outlet></router-outlet>
+  </div>
 </div>

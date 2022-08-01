@@ -21,12 +21,13 @@ export class LocalStorageService {
         }
     }
 
-    get (key: string) {
+    get (key: string): any | null | undefined {
         try {
             let data = localStorage.getItem (key);
-            if (!data) {
+            if (data == null) {
                 return null;
             }
+            console.log(data)
             return JSON.parse (data);
         } catch (e) {
             console.error ('Error getting data from localStorage', e);

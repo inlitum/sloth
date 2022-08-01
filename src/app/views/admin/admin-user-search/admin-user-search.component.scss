@@ -1,0 +1,50 @@
+@use '../../../base.scss';
+
+.admin-user-search-container {
+  width: 100%;
+  height: 100%;
+
+  padding: 1rem;
+}
+
+.admin-table {
+  width: 100%;
+  border: 1px solid base.$foreground-color;
+}
+
+.admin-table-row,th {
+  padding: 0.5rem 1rem;
+  border-right: 1px solid base.$foreground-color;
+  border-bottom: 1px solid base.$foreground-color;
+}
+
+.admin-table-row,td {
+  padding: 0.5rem 1rem;
+  border-right: 1px solid base.$foreground-color;
+  border-bottom: 1px solid base.$foreground-color;
+}
+
+.admin-actions {
+  padding: 0;
+  border: none;
+
+  button {
+    padding: 0.5rem 0.5rem;
+    border: none;
+  }
+}
+
+.admin-two-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.admin-three-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.admin-four-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}

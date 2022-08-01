@@ -1,14 +1,14 @@
-import { Injectable }                           from '@angular/core';
-import { HttpClient }                           from '@angular/common/http';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { environment }                          from '../../environments/environment';
-import { HeaderService }                        from './header.service';
-import { map, tap }                             from 'rxjs/operators';
-import { SlothUser }                            from '../models/user.data';
-import { Router }                               from '@angular/router';
-import { LocalStorageService }                  from './local-storage.service';
-import { ModelConstructor }                     from '../models/model';
-import { isObject as _isObject, isArray as _isArray }                 from 'lodash';
+import { Injectable }                                 from '@angular/core';
+import { HttpClient }                                 from '@angular/common/http';
+import { BehaviorSubject, Observable, Subject }       from 'rxjs';
+import { environment }                                from '../../environments/environment';
+import { HeaderService }                              from './header.service';
+import { map, tap }                                   from 'rxjs/operators';
+import { Router }                                     from '@angular/router';
+import { LocalStorageService }                        from './local-storage.service';
+import { ModelConstructor }                           from '../models/model';
+import { isObject as _isObject, isArray as _isArray } from 'lodash';
+import { User }                                       from '../models/user.model';
 
 export interface ParameterMap {
     [ param: string ]: string | string[];
@@ -168,6 +168,8 @@ export class SlothBackendService {
             return true;
         }
 
+        return true;
+
         let token = this._localStorageService.get('login-token');
         if (token) {
             this._backendToken = token;
@@ -186,40 +188,33 @@ export class SlothBackendService {
         this._router.navigate(['/login']);
     }
 
-    login ( loginData: SlothUser ) {
+    login ( loginData: User ) {
         if (!this.isSetup) {
             this.setup();
         }
 
-        let lToken = this._localStorageService.get('login-token');
-
-        if (!this._backendToken && lToken) {
-            this._backendToken = lToken;
-        }
-
-        if (this.isLoggedIn || this._backendToken) {
-            this.isLoggedIn = true;
-
-            this._router.navigate ([ this.returnUrl ? this.returnUrl : '' ]).then (() => {
-                this.returnUrl = '';
-            });
-
-            console.log ('Already logged in');
-            return;
-        }
+        // if (this.isLoggedIn || this._backendToken) {
+        //     this.isLoggedIn = true;
+        //
+        //     // this._router.navigate ([ this.returnUrl ? this.returnUrl : '' ]).then (() => {
+        //     //     this.returnUrl = '';
+        //     // });
+        //
+        //     console.log ('Already logged in');
+        //     return;
+        // }
 
         this._headerService.startLoadingForKey ('login');
-        this._httpClient.post (this._backendUrl + 'login', loginData)
+        this._httpClient.post (this._backendUrl + 'auth/login', loginData.toHttpParams())
         .subscribe ((result: any) => {
             this._headerService.stopLoadingForKey ('login');
             this.isLoggedIn    = true;
             this._backendToken = result.token;
 
-            this._localStorageService.set ('login-token', result.token);
 
-            this._router.navigate ([ this.returnUrl ]).then (() => {
-                this.returnUrl = '';
-            });
+            // this._router.navigate ([ this.returnUrl ]).then (() => {
+            //     this.returnUrl = '';
+            // });
         }, () => {
                 this._headerService.stopLoadingForKey('login');
             });
