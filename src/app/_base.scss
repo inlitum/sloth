@@ -2,7 +2,9 @@ $foreground-color       : #EBDBB2;
 $background-color       : #1B252F;
 $border-color           : #504945;
 $font                   : 'Ubuntu Mono', monospace;
-$sidebar-width          : 2.5rem;
+$sidebar-width          : 200px;
+$navbar-height          : 50px;
+$bar-background         : #15191c;
 
 @mixin theme() {
     background  : $background-color;

@@ -1,6 +1,7 @@
 import { Component, OnInit }   from '@angular/core';
 import { SlothBackendService } from '../../../services/sloth-backend.service';
 import { User }                from '../../../models/user.model';
+import { HttpClient }          from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,8 @@ import { User }                from '../../../models/user.model';
 export class LoginComponent implements OnInit {
 
   constructor(
-    private _slothBackend: SlothBackendService
+    private _slothBackend: SlothBackendService,
+    private _httpClient: HttpClient
   ) { }
 
   ngOnInit(): void {
@@ -22,6 +24,12 @@ export class LoginComponent implements OnInit {
     user.password = "su";
 
     this._slothBackend.login(user);
+  }
+
+  test () {
+    this._httpClient.get('http://localhost:3333/api/admin/users').subscribe((e) => {
+      console.log(e)
+    })
   }
 
 }

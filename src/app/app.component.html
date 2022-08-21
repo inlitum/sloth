@@ -1,30 +1,34 @@
 <div class="main-wrapper">
     <div class="app-options">
-        <div class="pages">
-            <a class="app-page-button" [routerLink]="''">
-                <i class="fa fa-house"></i>
-            </a>
-            <a class="app-page-button" [routerLink]="'pages/knowledge'">
-                <i class="fa fa-brain"></i>
-            </a>
-            <a class="app-page-button" [routerLink]="'finance/accounts'">
-                <i class="fa fa-usd"></i>
-            </a>
+        <sloth-sidebar>
+            Test
+        </sloth-sidebar>
+<!--        <div class="pages">-->
+<!--            <a class="app-page-button" [routerLink]="''">-->
+<!--                <i class="fa fa-house"></i>-->
+<!--            </a>-->
+<!--            <a class="app-page-button" [routerLink]="'pages/knowledge'">-->
+<!--                <i class="fa fa-brain"></i>-->
+<!--            </a>-->
+<!--            <a class="app-page-button" [routerLink]="'finance/accounts'">-->
+<!--                <i class="fa fa-usd"></i>-->
+<!--            </a>-->
 
-            <div class="last">
-                <a class="app-page-button" [routerLink]="'pages/profile'">
-                    <i class="fa fa-user" aria-hidden="true"></i>
-                </a>
-                <a class="app-page-button" [routerLink]="'pages/settings'">
-                    <i class="fa fa-gear"></i>
-                </a>
-                <a class="app-page-button" [routerLink]="'admin'">
-                    <i class="fa fa-hamsa"></i>
-                </a>
-            </div>
-        </div>
+<!--            <div class="last">-->
+<!--                <a class="app-page-button" [routerLink]="'pages/profile'">-->
+<!--                    <i class="fa fa-user" aria-hidden="true"></i>-->
+<!--                </a>-->
+<!--                <a class="app-page-button" [routerLink]="'pages/settings'">-->
+<!--                    <i class="fa fa-gear"></i>-->
+<!--                </a>-->
+<!--                <a class="app-page-button" [routerLink]="'admin'">-->
+<!--                    <i class="fa fa-hamsa"></i>-->
+<!--                </a>-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
     <div class="content-wrapper">
+        <sloth-navbar></sloth-navbar>
         <div class="site-progress">
             <div class="site-progress-custom" *ngIf="loading"></div>
         </div>

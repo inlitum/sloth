@@ -35,11 +35,20 @@ html, body {
 }
 
 .sloth-button:hover {
-  background: rgba(0,0,0,0.2);
+    background: rgba(0,0,0,0.2);
 }
 
 .sloth-button:active {
-  background: rgba(0,0,0,0.4);
+    background: rgba(0,0,0,0.4);
+}
+
+.sloth-button[disabled=true] {
+    //color: #3F6367;
+    color: #504945;
+}
+
+.sloth-button[disabled=true]:hover {
+    background: transparent;
 }
 
 .sloth-icon-button {
@@ -61,4 +70,14 @@ html, body {
 
 .sloth-icon-button:active {
   background: rgba(0,0,0,0.4);
+}
+
+.sloth-input {
+    background: transparent;
+    border: 1px solid base.$foreground-color;
+    color: base.$foreground-color;
+}
+
+.sloth-input:focus {
+    outline: none;
 }

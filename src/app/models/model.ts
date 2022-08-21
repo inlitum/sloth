@@ -1,85 +1,76 @@
-import { camelCase as _camelCase, snakeCase as _snakeCase, isEmpty as _isEmpty, toNumber } from 'lodash';
+import { camelCase as _camelCase, snakeCase as _snakeCase, isEmpty as _isEmpty, isNumber as _isNumber, toNumber as _toNumber, isBoolean as _isBoolean } from 'lodash';
+import * as moment from "moment";
 
 export interface SimpleParameterMap {
   [param: string]: string | string[];
 }
 
-export type ModelConstructor<T> = new ( data: { [key: string]: any } ) => T;
+export type ModelConstructor<T> = new (data: { [key: string]: any }) => T;
 
 export class Model {
 
-  private _createdAt: Date = new Date();
-  private _updatedAt: Date = new Date();
+  private _creationDate: Date = new Date();
+  private _updateDate: Date    = new Date();
 
-  get createdAt (): Date {
-    return this._createdAt;
+  get creationDate (): Date {
+    return this._creationDate;
   }
 
-  set createdAt ( value: Date ) {
-    this._createdAt = value;
+  set creationDate (value: Date) {
+    this._creationDate = value;
   }
 
-  get updatedAt (): Date {
-    return this._updatedAt;
+  get updateDate (): Date {
+    return this._updateDate;
   }
 
-  set updatedAt ( value: Date ) {
-    this._updatedAt = value;
+  set updateDate (value: Date) {
+    this._updateDate = value;
   }
 
   constructor () {
   }
 
-  public processJson ( data: { [key: string]: any } ): void {
-    if ( _isEmpty( data ) ) {
+  public processJson (data: { [key: string]: any }): void {
+    if (_isEmpty(data)) {
       return;
     }
 
-    Object.keys( data ).forEach( key => {
+    Object.keys(data).forEach(key => {
 
-      let property         = Model.apiToPropertyName( key );
-      let propertyAccessor = Model.apiToAccessorName( key );
+      let property         = Model.apiToPropertyName(key);
+      let propertyAccessor = Model.apiToAccessorName(key);
 
-      if ( !Object.getOwnPropertyDescriptor( Object.getPrototypeOf( this ), propertyAccessor ) ) {
+      if (!Object.getOwnPropertyDescriptor(Object.getPrototypeOf(this), propertyAccessor)) {
         propertyAccessor = property;
       }
 
-      if ( Object.getOwnPropertyDescriptor( this, property ) ) {
+      if (Object.getOwnPropertyDescriptor(this, property)) {
         // @ts-ignore
-        switch ( typeof this [property] ) {
-          case 'number':
-            // @ts-ignore
-            this [propertyAccessor] = toNumber( data[key] );
-            break;
-          case 'string':
-            // @ts-ignore
-            this [propertyAccessor] = data[key];
-            break;
-          case 'object':
-
-            // Test if teh object is a date
-
-            try {
-              // @ts-ignore
-              this [propertyAccessor] = new Date( data[key] );
-            } catch ( e ) {
-              console.log( e );
-            }
-
-            break;
-          case 'boolean':
-            break;
+        if (_isNumber(data[key])) {
+          // @ts-ignore
+          this [propertyAccessor] = _toNumber(data[key]);
+          // @ts-ignore
+        } else if (moment(data[key], moment.ISO_8601, true).isValid()) {
+          // @ts-ignore
+          this [propertyAccessor] = moment(data[key], moment.ISO_8601, true).toDate();
+        } else if (_isBoolean(data[key])) {
+          // @ts-ignore
+          this [propertyAccessor] = data[key];
+        } else {
+          // @ts-ignore
+          this [propertyAccessor] = data[key];
         }
       }
-    } );
+    });
   }
 
   protected getSerialisationKeys (): string[] {
-    const keys: string[] = Object.keys( this );
+    const keys: string[] = Object.keys(this);
     // In addition to the properties that are ignored because they're
     // decorated with @ModelIgnore, we also ignore keys that don't start
     // with an underscore.
-    return keys.filter( ( key ) => key.charAt( 0 ) === '_' );
+    return keys.filter((key) => key.charAt(0) === '_');
   }
 
   public toHttpParams (): SimpleParameterMap {
@@ -87,63 +78,61 @@ export class Model {
 
     // Here we go - convert
     this.getSerialisationKeys().forEach(
-      ( key ) => {
+      (key) => {
         let parameterName = '';
         try {
-          parameterName = Model.accessorToddWscName( key );
-        } catch ( e ) {
-          throw new Error( `Can't HTTP-param an object with an invalid property (${ this.constructor.name }.${ key }). Model classes must only have properties in the form _propName: ${ e }` );
+          parameterName = Model.accessorToddWscName(key);
+        } catch (e) {
+          throw new Error(`Can't HTTP-param an object with an invalid property (${ this.constructor.name }.${ key }). Model classes must only have properties in the form _propName: ${ e }`);
         }
         // @ts-ignore
-        if ( _.isNil( this[key] ) ) {
+        if (_.isNil(this[key])) {
           return;
         }
         // @ts-ignore
-        if ( typeof this [key] === 'number' ) {
+        if (typeof this [key] === 'number') {
           // @ts-ignore
           params[parameterName] = '' + this[key];
           // @ts-ignore
-        } else if ( typeof this [key] === 'string' ) {
+        } else if (typeof this [key] === 'string') {
           // @ts-ignore
           params[parameterName] = this[key];
           // @ts-ignore
-        } else if ( typeof this [key] === 'boolean' ) {
+        } else if (typeof this [key] === 'boolean') {
           // @ts-ignore
           params [parameterName] = this[key] ? '1' : '0';
           // @ts-ignore
         } else if ( this [key] instanceof Date ) {
-          // @ts-ignore
-          params[parameterName] = this[key].toUTCString( 'YYYY-MM-DDTHH:mm:ss' );
+            // @ts-ignore
+            params[parameterName] = this[key].toUTCString( 'YYYY-MM-DDTHH:mm:ss' );
         } else {
-          throw new Error( 'TODO: toHttpParams' ); // TODO
+          throw new Error('TODO: toHttpParams'); // TODO
         }
       },
     );
-
-    console.log('t')
 
     return params;
   }
 
   public static propertyToddWscName (name: string): string {
-    if (name.length < 2 || name.charAt (0) !== '_') {
-      throw new Error ('Model properties must be named in the form _propName (camel case with leading underscore). Please correct your model.');
+    if (name.length < 2 || name.charAt(0) !== '_') {
+      throw new Error('Model properties must be named in the form _propName (camel case with leading underscore). Please correct your model.');
     }
-    return _snakeCase (name);
+    return _snakeCase(name);
   }
 
   public static accessorToddWscName (name: string): string {
-    return _snakeCase (name);
+    return _snakeCase(name);
   }
 
-  private static apiToPropertyName ( key: string ): string {
+  private static apiToPropertyName (key: string): string {
 
-    let camelCased = _camelCase( key );
+    let camelCased = _camelCase(key);
 
     return `_${ camelCased }`;
   }
 
-  private static apiToAccessorName ( key: string ): string {
-    return _camelCase( key );
+  private static apiToAccessorName (key: string): string {
+    return _camelCase(key);
   }
 }

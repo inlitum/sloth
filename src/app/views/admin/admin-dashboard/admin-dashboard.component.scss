@@ -4,86 +4,83 @@
     width: 100%;
     height: 100%;
 
+    padding: 1rem;
+}
+
+.sloth-tab-group {
+    height: 100%;
     display: grid;
-    grid-template-columns: 200px auto;
+    grid-template-rows: base.$navbar-height 1fr;
+
 }
 
-.admin-dashboard-sidebar {
+.sloth-tab-container {
+    display: grid;
+    grid-template-columns: auto 1fr;
+}
+
+.filler {
     width: 100%;
-    height: 100%;
+    border-bottom: 1px solid base.$foreground-color;
+}
+
+.sloth-tab {
+    background: transparent;
+    border: 1px solid base.$foreground-color;
+    height: base.$navbar-height;
+    width: base.$sidebar-width / 1.5;
+    color: base.$foreground-color;
+}
+
+.sloth-tab.active {
+    background: rgba(0,0,0,0.2);
+    border-bottom: 1px solid transparent;
+}
+
+.sloth-tab:hover {
+    background: rgba(0,0,0,0.2);
+}
+
+.sloth-tab:active:not(.active) {
+    background: rgba(0,0,0,0.3);
+}
+
+.sloth-tab:not(:first-child) {
+    border-left: none;
+}
+
+.sloth-content {
+    background: rgba(0,0,0,0.2);
+    border-left: 1px solid base.$foreground-color;
+    border-bottom: 1px solid base.$foreground-color;
     border-right: 1px solid base.$foreground-color;
-}
-
-.admin-sidebar-wrapper {
-    display: flex;
-    flex-direction: column;
-
-    overflow-y: auto;
-
-    //grid-template-rows: 50px 100%;
-}
-
-.admin-sidebar-header {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    font-size: 1.5rem;
-    border-bottom: 1px solid base.$foreground-color;
-}
-
-.admin-dashboard-sidebar {
-    width: 100%;
     height: 100%;
 }
 
-.admin-sidebar-options {
-    overflow-y: auto;
-}
+@media (max-width: 900px) {
+    .sloth-tab-group {
+        display: flex;
+        flex-direction: column;
+    }
 
-.last-object {
-    border-bottom: 1px solid base.$foreground-color;
-}
+    .sloth-tab-container {
+        display: flex;
+        flex-direction: column;
+    }
 
-.admin-sidebar-link {
-  height: 50px;
-  border-bottom: 1px solid base.$foreground-color;
+    .sloth-tab-wrapper {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
 
-  display: grid;
-  grid-template-columns: 50px auto;
-  font-size: 1.2rem;
-}
+    .sloth-tab {
+        width: 100%;
+        border: none;
+        border-left: 1px solid base.$foreground-color !important;
+        border-top: 1px solid base.$foreground-color;
+        border-right: 1px solid base.$foreground-color;
+    }
 
-.admin-sidebar-link-icon {
-  height: 100%;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.admin-sidebar-link-text {
-  height: 100%;
-  width: 100%;
-
-  display: flex;
-  align-items: center;
-}
-
-.sidebar-clickable {
-  user-select: none;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-}
-
-.sidebar-clickable:hover {
-  cursor: pointer;
-  background: rgba(0,0,0,0.2);
-}
-
-.sidebar-clickable:active {
-  background: rgba(0,0,0,0.4);
 }

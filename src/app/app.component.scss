@@ -15,8 +15,6 @@
     width: base.$sidebar-width;
     height: 100%;
 
-    background: #15191c;
-
     position: absolute;
 }
 
@@ -57,13 +55,13 @@
 .content-wrapper {
     height: 100%;
     width: 100%;
+
     display: grid;
+    grid-template-rows: base.$navbar-height 1fr;
 
     overflow: auto;
 
     margin-left: base.$sidebar-width;
-
-    grid-template-rows: 1fr;
 }
 
 .content {

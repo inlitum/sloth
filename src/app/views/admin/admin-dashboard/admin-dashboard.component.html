@@ -1,46 +1,21 @@
 <div class="admin-dashboard">
-  <div class="admin-dashboard-sidebar">
-    <div #adminSidebarWrapper>
-      <div class="admin-sidebar-header">
-        Admin Area
-      </div>
-      <div class="admin-sidebar-options">
-        <!-- Users -->
-        <div class="admin-sidebar-link sidebar-clickable" [routerLink]="'users'">
-          <div class="admin-sidebar-link-icon">
-            <i class="fa-solid fa-users"></i>
-          </div>
-          <div class="admin-sidebar-link-text">
-            Users
-          </div>
+    <div class="sloth-tab-group">
+        <div class="sloth-tab-container">
+            <div class="sloth-tab-wrapper">
+                <button class="sloth-tab {{currentPage == 'users' ? 'active' : ''}}" [routerLink]="'/admin/users'">
+                    Users
+                </button>
+                <button class="sloth-tab {{currentPage == 'groups' ? 'active' : ''}}" [routerLink]="'/admin/groups'">
+                    Groups
+                </button>
+                <button class="sloth-tab {{currentPage == 'user-groups' ? 'active' : ''}}" [routerLink]="'/admin/user-groups'">
+                    User Groups
+                </button>
+            </div>
+            <div class="filler"></div>
         </div>
-        <!-- Groups -->
-        <div class="admin-sidebar-link sidebar-clickable" [routerLink]="'groups'">
-          <div class="admin-sidebar-link-icon">
-            <i class="fa-solid fa-user-gear"></i>
-          </div>
-          <div class="admin-sidebar-link-text">
-            Groups
-          </div>
+        <div class="sloth-content">
+            <router-outlet></router-outlet>
         </div>
-        <!-- User Groups -->
-        <div class="admin-sidebar-link sidebar-clickable" [routerLink]="'user-groups'">
-          <div class="admin-sidebar-link-icon">
-            <i class="fa-solid fa-user-group"></i>
-          </div>
-          <div class="admin-sidebar-link-text">
-            User Groups
-          </div>
-        </div>
-        <!--                <ng-container *ngIf="adminSidebarStructure && adminSidebarStructure.content">-->
-        <!--                    <ng-container *ngFor="let sidebarObject of adminSidebarStructure.content; let idx=index;">-->
-        <!--                        <app-sidebar-object [object]="sidebarObject" [lastItem]="idx === adminSidebarStructure.content.length - 1"></app-sidebar-object>-->
-        <!--                    </ng-container>-->
-        <!--                </ng-container>-->
-      </div>
     </div>
-  </div>
-  <div #adminDashboardContent class="admin-dashboard-content">
-    <router-outlet></router-outlet>
-  </div>
 </div>

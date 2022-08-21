@@ -1,0 +1,60 @@
+@use "../../base";
+
+.sloth-sidebar {
+    width: base.$sidebar-width;
+    height: 100vh;
+    border-right: 1px solid base.$foreground-color;
+    background: base.$bar-background;
+
+    display: grid;
+    grid-template-rows: base.$navbar-height 1fr;
+
+}
+
+.sidebar-header {
+    height: base.$navbar-height;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.4rem;
+    border-bottom: 1px solid base.$foreground-color;
+}
+
+.sidebar-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-content-bottom {
+    width: 100%;
+    margin-top: auto;
+    margin-bottom:  0;
+}
+
+.sidebar-link {
+    height: 50px;
+    width: 100%;
+
+    border: none;
+    border-bottom: 1px solid base.$foreground-color;
+
+
+    background: transparent;
+    color: base.$foreground-color;
+}
+
+.sidebar-link:hover {
+    background: rgba(0,0,0,0.2);
+}
+
+.sidebar-link:active {
+    background: rgba(0,0,0,0.4);
+}
+
+.sidebar-link.bottom {
+    border-bottom: none;
+    border-top: 1px solid base.$foreground-color;
+}
+
+

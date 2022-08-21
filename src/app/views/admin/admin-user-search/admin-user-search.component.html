@@ -1,25 +1,64 @@
 <div class="admin-user-search-container">
-  <table class="admin-table">
-    <tr class="admin-table-row">
-      <th>User ID</th>
-      <th>Username</th>
-      <th>Email</th>
-      <th>Actions</th>
-    </tr>
-    <tr>
-      <ng-container>
-        <td>1</td>
-        <td>jborrie</td>
-        <td>jackborrie@hotmail.com</td>
-        <td class="admin-actions admin-two-actions">
-          <button class="sloth-button">
-            <span class="fa-solid fa-pencil"></span>
-          </button>
-          <button class="sloth-button">
-            <span class="fa-solid fa-trash"></span>
-          </button>
-        </td>
-      </ng-container>
-    </tr>
-  </table>
+    <div class="topRow">
+        <div class="title">
+            Users
+        </div>
+        <div class="right">
+            <input class="sloth-input" placeholder="Search term..."/>
+        </div>
+    </div>
+    <table class="admin-table" *ngIf="(users || []).length > 0">
+        <tr class="admin-table-row">
+            <th>User ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+        <tr *ngFor="let user of users">
+            <ng-container *ngIf="user.userId !== null">
+                <td>{{user.userId}}</td>
+                <td>{{user.username}}</td>
+                <td>{{user.email}}</td>
+                <td class="admin-actions admin-three-actions">
+                    <button class="sloth-button" disabled="true" (click)="openUser(user.userId)">
+                        <span class="fa-solid fa-up-right-from-square"></span>
+                    </button>
+                    <button class="sloth-button" (click)="editUser(user.userId)">
+                        <span class="fa-solid fa-pencil"></span>
+                    </button>
+                    <button class="sloth-button" (click)="deleteUser(user.userId)">
+                        <span class="fa-solid fa-trash"></span>
+                    </button>
+                </td>
+            </ng-container>
+        </tr>
+    </table>
+    <div class="sloth-pagination" *ngIf="userMeta != null">
+        <div class="sloth-pagination-left">
+            <span>
+                Viewing {{((userMeta.currentPage ?? 0) - 1) * (userMeta.perPage ?? 0) + 1}} - {{(userMeta.currentPage ?? 0) * (userMeta.perPage ?? 0)}} of {{userMeta.total}}
+            </span>
+            <span class="mx-3">
+                Page {{userMeta.currentPage}} / {{userMeta.lastPage}}
+            </span>
+        </div>
+        <div class="sloth-pagination-right">
+            <button [disabled]="userMeta.firstPage == userMeta.currentPage" class="pagination-button previous {{userMeta.firstPage == userMeta.currentPage ? 'disabled' : ''}}" (click)="firstPage()">
+                &laquo;
+            </button>
+            <button [disabled]="userMeta.firstPage == userMeta.currentPage" class="pagination-button previous {{userMeta.firstPage == userMeta.currentPage ? 'disabled' : ''}}" (click)="previousPage()">
+                &lsaquo;
+            </button>
+            <button class="pagination-button current-page">
+                {{userMeta.currentPage}}
+            </button>
+            <button [disabled]="userMeta.lastPage == userMeta.currentPage" class="pagination-button next {{userMeta.lastPage == userMeta.currentPage ? 'disabled' : ''}}" (click)="nextPage()">
+                &rsaquo;
+            </button>
+            <button [disabled]="userMeta.lastPage == userMeta.currentPage" class="pagination-button next {{userMeta.lastPage == userMeta.currentPage ? 'disabled' : ''}}" (click)="lastPage()">
+                &raquo;
+            </button>
+        </div>
+    </div>
 </div>
+
