@@ -12,7 +12,7 @@
     height: 100%;
     width: 100%;
 
-    border-top: 1px solid base.$foreground-color;
+    border-top: base.$border;
 
     font-size: 1.0rem;
 }
@@ -64,7 +64,7 @@
     width: 50px;
     height: 49px;
 
-    border-left: 1px solid base.$foreground-color;
+    border-left: base.$border;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -79,7 +79,7 @@
 }
 
 .last-item {
-    border-bottom: 1px solid base.$foreground-color;
+    border-bottom: base.$border;
 }
 
 .sidebar-clickable {
@@ -99,13 +99,13 @@
 }
 
 .children-container {
-    border-bottom: 1px solid base.$foreground-color;
+    border-bottom: base.$border;
 
     margin-bottom: 1rem;
 }
 
 .child-children-container {
-    border-bottom: 1px solid base.$foreground-color;
+    border-bottom: base.$border;
 
     margin-bottom: 0.5rem;
 }

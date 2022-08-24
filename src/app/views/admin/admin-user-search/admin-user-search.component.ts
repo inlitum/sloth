@@ -12,7 +12,7 @@ import { Meta }              from '../../../models/meta.model';
            })
 export class AdminUserSearchComponent implements OnInit {
 
-    public users: User[] | null = null;
+    public users: User[] = [];
     public userMeta: Meta | null = null;
     public currentPage: number = 1;
     public pageSize: number = 22;
@@ -36,10 +36,20 @@ export class AdminUserSearchComponent implements OnInit {
             orderDirection: this.sortDirection
         }
 
-        this._userService.getAllUsers(options).subscribe((response) => {
-            this.users = response.data;
-            this.userMeta = response.meta;
-        })
+        for (let i = 0; i < 10; i++) {
+            let data = {
+                user_id: i,
+                username: `jack ${i}`,
+                email: `jack${i}@email.com`
+            }
+            this.users.push(new User(data));
+
+        }
+
+        // this._userService.getAllUsers(options).subscribe((response) => {
+        //     this.users = response.data;
+        //     this.userMeta = response.meta;
+        // })
     }
 
     openUser (userId: number): void {

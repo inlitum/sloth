@@ -29,7 +29,7 @@ html, body {
 // Buttons
 
 .sloth-button {
-  border: 1px solid base.$foreground-color;
+  border: base.$border;
   background: transparent;
   color: base.$foreground-color;
 }
@@ -74,10 +74,33 @@ html, body {
 
 .sloth-input {
     background: transparent;
-    border: 1px solid base.$foreground-color;
+    border: base.$border;
     color: base.$foreground-color;
 }
 
 .sloth-input:focus {
     outline: none;
+}
+
+// Table
+
+.sloth-table {
+    thead {
+        tr {
+            th {
+                border: base.$border;
+                padding: 0.5rem 1rem;
+            }
+        }
+    }
+    tbody {
+        tr {
+            td {
+                border-left: base.$border;
+                border-bottom: base.$border;
+                border-right: base.$border;
+                padding: 0.5rem 1rem;
+            }
+        }
+    }
 }

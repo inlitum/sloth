@@ -3,5 +3,5 @@
 .sloth-navbar {
     height: base.$navbar-height;
     background: base.$bar-background;
-    border-bottom: 1px solid base.$foreground-color;
+    border-bottom: base.$border;
 }

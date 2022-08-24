@@ -45,7 +45,7 @@
 .page-options  {
     width: 20%;
     height: 100%;
-    border-right: 1px solid base.$foreground-color;
+    border-right: base.$border;
 }
 
 .page-options.in {
