@@ -1,4 +1,4 @@
-import { camelCase as _camelCase, snakeCase as _snakeCase, isEmpty as _isEmpty, isNumber as _isNumber, toNumber as _toNumber, isBoolean as _isBoolean } from 'lodash';
+import { camelCase as _camelCase, isBoolean as _isBoolean, isEmpty as _isEmpty, isNumber as _isNumber, snakeCase as _snakeCase, toNumber as _toNumber } from 'lodash';
 import * as moment                                                                                                                                      from 'moment';
 
 export interface SimpleParameterMap {

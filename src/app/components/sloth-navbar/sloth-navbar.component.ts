@@ -12,8 +12,4 @@ export class SlothNavbarComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  hasUserGroup (userGroup: string): boolean {
-      return true;
-  }
-
 }

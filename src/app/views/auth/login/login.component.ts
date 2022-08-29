@@ -1,7 +1,7 @@
-import { Component, OnInit }   from '@angular/core';
-import { SlothBackendService } from '../../../services/sloth-backend.service';
-import { User }                from '../../../models/user.model';
 import { HttpClient }          from '@angular/common/http';
+import { Component, OnInit }   from '@angular/core';
+import { User }                from '../../../models/user.model';
+import { SlothBackendService } from '../../../services/sloth-backend.service';
 
 @Component({
   selector: 'app-login',
