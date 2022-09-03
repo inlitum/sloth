@@ -8,7 +8,6 @@
 
     display: grid;
     grid-template-rows: base.$navbar-height 1fr;
-
 }
 
 .sidebar-header {
@@ -17,7 +16,6 @@
     justify-content: center;
     align-items: center;
     font-size: 1.4rem;
-    border-bottom: base.$border;
 }
 
 .sidebar-content {
@@ -25,36 +23,3 @@
     display: flex;
     flex-direction: column;
 }
-
-.sidebar-content-bottom {
-    width: 100%;
-    margin-top: auto;
-    margin-bottom:  0;
-}
-
-.sidebar-link {
-    height: 50px;
-    width: 100%;
-
-    border: none;
-    border-bottom: base.$border;
-
-
-    background: transparent;
-    color: base.$foreground-color;
-}
-
-.sidebar-link:hover {
-    background: rgba(0,0,0,0.2);
-}
-
-.sidebar-link:active {
-    background: rgba(0,0,0,0.4);
-}
-
-.sidebar-link.bottom {
-    border-bottom: none;
-    border-top: base.$border;
-}
-
-

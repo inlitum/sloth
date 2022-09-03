@@ -1,0 +1,112 @@
+@use '../../base';
+
+.sloth-sidebar-item {
+    height: base.$sidebar-item-height;
+    width: 100%;
+
+    padding-left: 1rem;
+    padding-right: 0;
+
+    font-size: 1.2rem;
+}
+
+.sloth-sidebar-icon {
+    margin-right: 1rem;
+}
+
+.sloth-sidebar-centered {
+    display: flex;
+    align-items: center;
+}
+
+.sloth-sidebar-link {
+    color: base.$foreground-color;
+    text-decoration: none;
+}
+
+.sloth-sidebar-link.active {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.sloth-sidebar-link-active {
+    width: 2px;
+    height: 100%;
+
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.sloth-sidebar-button {
+    background: transparent;
+    border: none;
+    color: base.$foreground-color;
+}
+
+.sloth-sidebar-header {
+    font-size: 0.9rem !important;
+    color: grey;
+    height: auto !important;
+}
+
+.sloth-sidebar-text {
+    font-size: 1rem !important;
+}
+
+.sloth-sidebar-section {
+    color: base.$foreground-color;
+    background: transparent;
+    border: none;
+}
+
+.sloth-sidebar-section-children {
+    padding-left: 1rem;
+}
+
+.sloth-sidebar-section-icon {
+    margin-left: auto;
+    margin-right: 1rem;
+    font-size: 1rem !important;
+}
+
+.sloth-sidebar-section-text {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+}
+
+button.sloth-sidebar-section-icon {
+    height: 100%;
+    margin-right: 0;
+    padding: 0 1rem !important;
+}
+
+.sloth-sidebar-clickable {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+.sloth-sidebar-button-wiper {
+    background: transparent;
+    border: none;
+    color: base.$foreground-color;
+}
+
+.sloth-sidebar-clickable:focus {
+    outline: 0;
+}
+
+.sloth-sidebar-clickable:hover {
+    background: rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.sloth-sidebar-clickable:active {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.sloth-sidebar-child-wrapper {
+    width: 100%;
+}

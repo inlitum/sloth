@@ -5,6 +5,7 @@ import { CardComponent }                                                        
 import { ModalComponent }                                                               from './modal/modal.component';
 import { SidebarObjectComponent }                                                       from './sidebar-object/sidebar-object.component';
 import { SlothNavbarComponent }                                                         from './sloth-navbar/sloth-navbar.component';
+import { SlothSidebarItemComponent }                                                    from './sloth-sidebar-item/sloth-sidebar-item.component';
 import { SlothSidebarComponent }                                                        from './sloth-sidebar/sloth-sidebar.component';
 import { SlothTableComponent, TableHeaderTemplateDirective, TableRowTemplateDirective } from './sloth-table/sloth-table.component';
 
@@ -18,6 +19,7 @@ import { SlothTableComponent, TableHeaderTemplateDirective, TableRowTemplateDire
                    SlothTableComponent,
                    TableHeaderTemplateDirective,
                    TableRowTemplateDirective,
+                   SlothSidebarItemComponent,
                ],
                exports: [
                    CardComponent,

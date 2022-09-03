@@ -1,0 +1,55 @@
+<div *ngIf="sidebarItem">
+    <ng-container
+        *ngTemplateOutlet="
+        sidebarItem.type === 'link' ? sidebarLink :
+        sidebarItem.type === 'header' ? sidebarHeader :
+        sidebarItem.type === 'text' ? sidebarText :
+        sidebarItem.type === 'section' ? sidebarSection :
+        sidebarText; context: { $implicit: sidebarItem}">
+    </ng-container>
+</div>
+
+<ng-template #sidebarLink let-item>
+    <a class="sloth-sidebar-item sloth-sidebar-link sloth-sidebar-centered sloth-sidebar-clickable{{active ? ' active' : ''}}"
+       [routerLink]="sidebarItem.link || ''">
+        <div class="sloth-sidebar-icon" *ngIf="sidebarItem.icon">
+            <i class="fas {{sidebarItem.icon}}"></i>
+        </div>
+        {{item.text}}
+        <!--        Little colored thing on the side of the active sidebar link -->
+        <div class="sloth-sidebar-link-active" *ngIf="active" [ngStyle]="{'background': sidebarItem.color || 'transparent'}">
+        </div>
+    </a>
+</ng-template>
+<ng-template #sidebarHeader let-item>
+    <div class="sloth-sidebar-item sloth-sidebar-header">
+        {{item.text | uppercase}}
+    </div>
+    <div class="sloth-sidebar-child-wrapper" [hidden]="!sidebarItem.children">
+        <ng-container
+            *ngTemplateOutlet="childSection; context: { $implicit: sidebarItem.children}">
+        </ng-container>
+    </div>
+</ng-template>
+<ng-template #sidebarText let-item>
+    <div class="sloth-sidebar-item sloth-sidebar-centered sloth-sidebar-text">
+        {{item.text}}
+    </div>
+</ng-template>
+<ng-template #sidebarSection let-item>
+    <button class="sloth-sidebar-item sloth-sidebar-centered sloth-sidebar-clickable sloth-sidebar-section sloth-sidebar-button-wiper" (click)="toggleSection()">
+        {{item.text}}
+        <i class="sloth-sidebar-section-icon fas fa-chevron-right" *ngIf="!active"></i>
+        <i class="sloth-sidebar-section-icon fas fa-chevron-down" *ngIf="active"></i>
+    </button>
+    <div class="sloth-sidebar-section-children sloth-sidebar-child-wrapper" [hidden]="!active || !sidebarItem.children">
+        <ng-container
+            *ngTemplateOutlet="childSection; context: { $implicit: sidebarItem.children}">
+        </ng-container>
+    </div>
+</ng-template>
+<ng-template #childSection let-children>
+    <ng-container *ngFor="let child of children">
+        <sloth-sidebar-item [sidebarItem]="child"></sloth-sidebar-item>
+    </ng-container>
+</ng-template>

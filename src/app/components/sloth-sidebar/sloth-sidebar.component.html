@@ -4,20 +4,10 @@
     </div>
     <div class="sidebar-content">
         <div class="sidebar-content-top">
-            <button class="sidebar-link active" [routerLink]="''">
-                Dashboard
-            </button>
-            <button class="sidebar-link" [routerLink]="'/finance'">
-                Finance
-            </button>
-        </div>
-        <div class="sidebar-content-bottom">
-            <button class="sidebar-link bottom" [routerLink]="'/admin'">
-                Admin
-            </button>
-            <button class="sidebar-link bottom" [routerLink]="'/settings'">
-                Settings
-            </button>
+            <ng-container *ngFor="let item of sidebar">
+                <sloth-sidebar-item [sidebarItem]="item">
+                </sloth-sidebar-item>
+            </ng-container>
         </div>
     </div>
 </div>
