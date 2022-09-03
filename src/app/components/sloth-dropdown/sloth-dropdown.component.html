@@ -1,0 +1,18 @@
+<div class="sloth-dropdown">
+    <div class="dropdown-button">
+
+
+
+
+    </div>
+    <div class="dropdown-menu">
+        <ng-container *ngTemplateOutlet="dropdownMenu || defaultDropdown">
+        </ng-container>
+    </div>
+</div>
+
+<ng-template #defaultDropdown>
+    <div class="invalid">
+        No dropdown menu has been defined.
+    </div>
+</ng-template>

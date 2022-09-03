@@ -4,4 +4,19 @@
     height: base.$navbar-height;
     background: base.$bar-background;
     border-bottom: base.$border;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.sloth-navbar > * {
+    height: base.$navbar-height;
+}
+
+.navbar-right {
+    margin-left: auto;
+    margin-right: 1rem;
+
+    display: flex;
+    align-items: center;
 }
