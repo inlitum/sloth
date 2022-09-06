@@ -1,7 +1,6 @@
-import { ThisReceiver } from '@angular/compiler';
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, Renderer2, ViewChild } from '@angular/core';
-import { ModalComponent } from 'src/app/components/modal/modal.component';
-import { Account } from 'src/app/models/finance/account.model';
+import { ModalComponent }                                                                                      from 'src/app/components/modal/modal.component';
+import { Account }                                                                                             from 'src/app/models/finance/account.model';
 
 @Component({
   selector: 'app-bank-accounts',
@@ -29,13 +28,13 @@ export class BankAccountsComponent implements OnInit, AfterViewInit {
   constructor(
     private _renderer: Renderer2,
     private _changeDetector: ChangeDetectorRef
-  ) { 
+  ) {
 
     for (let i = 0; i < 100; i++) {
       let a = {
         id: i + 1,
         initialBalance: i * (i + 0.123),
-        name: `Something ${i + 1}`,
+        name: `Jesse ${i + 1}`,
         userId: 1
       }
 

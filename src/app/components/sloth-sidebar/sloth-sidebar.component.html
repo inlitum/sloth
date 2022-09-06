@@ -1,12 +1,9 @@
 <div class="sloth-sidebar">
-    <div class="sidebar-header">
-        SLOTH
-    </div>
+    <div class="sidebar-header">SLOTH</div>
     <div class="sidebar-content">
-        <div class="sidebar-content-top">
-            <ng-container *ngFor="let item of sidebar">
-                <sloth-sidebar-item [sidebarItem]="item">
-                </sloth-sidebar-item>
+        <div class="sidebar-content-top" *ngIf="sidebar && sidebar.children">
+            <ng-container *ngFor="let item of sidebar.children">
+                <sloth-sidebar-item [sidebarItem]="item"></sloth-sidebar-item>
             </ng-container>
         </div>
     </div>

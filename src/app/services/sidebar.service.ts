@@ -1,18 +1,18 @@
 import { Injectable, OnDestroy }                  from '@angular/core';
 import { NavigationEnd, Router }                  from '@angular/router';
 import { BehaviorSubject, Subject, Subscription } from 'rxjs';
-import { SlothSidebarItem }                       from '../components/sloth-sidebar-item/sloth-sidebar-item.component';
+import { SlothSidebar, SlothSidebarItem }         from '../interface/sidebar.interface';
 
 @Injectable ({
                  providedIn: 'root',
              })
 export class SidebarService implements OnDestroy {
     // This subject is the main subject used to update the sidebar,
-    public $sidebar: BehaviorSubject<SlothSidebarItem[] | null> = new BehaviorSubject<SlothSidebarItem[] | null> (null);
+    public $sidebar: BehaviorSubject<SlothSidebar | null> = new BehaviorSubject<SlothSidebar | null> (null);
     // The subject used by individual sidebar item components to check if that item was changed.
     public $sidebarItemChanged: Subject<SlothSidebarItem> = new Subject<SlothSidebarItem> ();
     // The internal reference of the sidebar.
-    private _sidebarObject: SlothSidebarItem[] | null = null;
+    private _sidebarObject: SlothSidebar | null = null;
     // The link sidebar item type that matches the current route.
     // This is cached so the active flag can be removed when a route changes.
     private _currentActiveLink: SlothSidebarItem | null = null;
@@ -52,7 +52,7 @@ export class SidebarService implements OnDestroy {
      * Changes the structure of the sidebar.
      * @param sidebarObject The setup of the sidebar.
      */
-    public setSidebarObject (sidebarObject: SlothSidebarItem[] | null) {
+    public setSidebarObject (sidebarObject: SlothSidebar | null) {
         this._sidebarObject = sidebarObject;
         this.$sidebar.next (this._sidebarObject);
     }
@@ -73,8 +73,8 @@ export class SidebarService implements OnDestroy {
 
         // If the start point is null, then we loop over the entire sidebar array.
         if (startPoint == null) {
-            for (let i = 0; i < this._sidebarObject.length; i++) {
-                outputItem = this.getItemById (itemId, this._sidebarObject[i]);
+            for (let i = 0; i < this._sidebarObject.children.length; i++) {
+                outputItem = this.getItemById (itemId, this._sidebarObject.children[i]);
                 // If there is a match, then break out of the loop. We don't want to have to search the entire tree,
                 // every time.
                 if (outputItem !== null) {
@@ -122,8 +122,8 @@ export class SidebarService implements OnDestroy {
         }
         // If no startpoint is defined, loop over the top level of the sidebar objects.
         if (startPoint == null) {
-            for (let i = 0; i < this._sidebarObject.length; i++) {
-                outputItem = this.getItemByRoute (route, this._sidebarObject[i]);
+            for (let i = 0; i < this._sidebarObject.children.length; i++) {
+                outputItem = this.getItemByRoute (route, this._sidebarObject.children[i]);
                 // If there is a match, then break out of the loop. We don't want to have to search the entire tree,
                 // every time.
                 if (outputItem !== null) {
