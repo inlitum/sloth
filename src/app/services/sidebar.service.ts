@@ -1,12 +1,13 @@
-import { Injectable, OnDestroy }                  from '@angular/core';
+import { Injectable, OnDestroy, OnInit }          from '@angular/core';
 import { NavigationEnd, Router }                  from '@angular/router';
 import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 import { SlothSidebar, SlothSidebarItem }         from '../interface/sidebar.interface';
+import { AuthService }                            from './auth.service';
 
 @Injectable ({
                  providedIn: 'root',
              })
-export class SidebarService implements OnDestroy {
+export class SidebarService implements OnDestroy, OnInit {
     // This subject is the main subject used to update the sidebar,
     public $sidebar: BehaviorSubject<SlothSidebar | null> = new BehaviorSubject<SlothSidebar | null> (null);
     // The subject used by individual sidebar item components to check if that item was changed.
@@ -19,7 +20,11 @@ export class SidebarService implements OnDestroy {
     // Used to unsubscribe all subscriptions in the service.
     private _subscriptions: Subscription = new Subscription ();
 
-    constructor (private _router: Router) {
+    constructor (private _router: Router, private _auth: AuthService) {
+
+    }
+
+    ngOnInit () {
         // Subscribe when a router event occurs.
         let routerSub = this._router.events.subscribe (event => {
             if (event instanceof NavigationEnd) {
@@ -62,7 +67,7 @@ export class SidebarService implements OnDestroy {
      * @param itemId The id of the item to be found
      * @param startPoint The point at which to start the search.
      */
-    public getItemById (itemId: string, startPoint: SlothSidebarItem | null = null): SlothSidebarItem | null {
+    public getItemById (itemId: number, startPoint: SlothSidebarItem | null = null): SlothSidebarItem | null {
         //TODO optimise the fetching of the item ids.
 
         let outputItem: SlothSidebarItem | null = null;
@@ -155,7 +160,7 @@ export class SidebarService implements OnDestroy {
      * @param itemId The item ID of the matching item.
      * @param badge The badge.
      */
-    public setSidebarItemBadge (itemId: string, badge: string) {
+    public setSidebarItemBadge (itemId: number, badge: string) {
         const sidebarItem = this.getItemById (itemId);
 
         if (!sidebarItem) {
@@ -165,5 +170,12 @@ export class SidebarService implements OnDestroy {
         sidebarItem.badge = badge;
 
         this.$sidebarItemChanged.next (sidebarItem);
+    }
+
+    public setVisibility (visibility: 'small' | 'full-size' | 'hidden') {
+        if (!this._sidebarObject) {
+            return;
+        }
+        this._sidebarObject.type = visibility;
     }
 }

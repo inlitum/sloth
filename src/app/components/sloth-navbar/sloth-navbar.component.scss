@@ -4,4 +4,24 @@
     height: base.$navbar-height;
     background: base.$bar-background;
     border-bottom: base.$border;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.navbar-right {
+    width: auto;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.navbar-button {
+    margin-top: -2px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border: none;
+    height: base.$navbar-height;
+
+    display: flex;
+    align-items: center;
 }

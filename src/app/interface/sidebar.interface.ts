@@ -1,19 +1,19 @@
 
 // Main interface used by the sidebar.
 export interface SlothSidebarItem {
-    id: string;
-    type: 'link' | 'header' | 'text' | 'section';
-    text: string;
-    icon?: string;
-    link?: string;
-    color?: string;
-    badge?: string;
-    active?: boolean;
-    children?: SlothSidebarItem[];
+    id: number | null;
+    type: 'link' | 'header' | 'text' | 'section' | null;
+    text: string | null;
+    icon: string | null;
+    link: string | null;
+    color: string | null;
+    badge: string | null;
+    active: boolean | null;
+    children: SlothSidebarItem[] | null;
 }
 
 export interface SlothSidebar {
-    type: 'small' | 'full-size',
+    type: 'small' | 'full-size' | 'hidden',
     title?: string
     children: SlothSidebarItem[]
 }

@@ -1,6 +1,6 @@
 import { Model } from './model';
 
-export class User extends Model {
+export class UserSession extends Model {
 
   private _userId: number | null   = null;
   private _username: string | null = null;

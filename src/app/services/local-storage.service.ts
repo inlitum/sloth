@@ -27,7 +27,6 @@ export class LocalStorageService {
             if (data == null) {
                 return null;
             }
-            console.log(data)
             return JSON.parse (data);
         } catch (e) {
             console.error ('Error getting data from localStorage', e);

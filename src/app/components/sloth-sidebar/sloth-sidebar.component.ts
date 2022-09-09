@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil }           from 'rxjs';
 import { SlothSidebar }                 from '../../interface/sidebar.interface';
+import { AuthService }                  from '../../services/auth.service';
 import { SidebarService }               from '../../services/sidebar.service';
 
 @Component ({
@@ -14,7 +15,7 @@ export class SlothSidebarComponent implements OnInit, OnDestroy {
 
     public sidebar: SlothSidebar | null = null;
 
-    constructor (private _sidebarService: SidebarService) {
+    constructor (private _sidebarService: SidebarService, private _auth: AuthService) {
 
     }
 
@@ -25,73 +26,30 @@ export class SlothSidebarComponent implements OnInit, OnDestroy {
             },
         )
 
+        this._auth.status$.pipe(takeUntil(this.$onDestroy)).subscribe(
+            (status) => {
+                let sidebar = this.sidebar;
 
-        let sidebar: SlothSidebar = {
-            type: 'small',
-            children: [
-                {
-                    id  : 'A',
-                    text: 'Dashboard',
-                    type: 'link',
-                    link: '/',
+                if (!sidebar) {
+                    sidebar = {
+                        title: 'SLOTH',
+                        type: 'full-size',
+                        children: []
+                    }
                 }
-                , {
-                    id: 'B',
-                    text: 'Pages',
-                    type: 'header',
-                    children: [
-                        {
-                            id      : 'BA',
-                            text    : 'Finances',
-                            type    : 'section',
-                            children: [
-                                {
-                                    id   : 'BAA',
-                                    text : 'Accounts',
-                                    type : 'link',
-                                    link : '/finance/accounts',
-                                    color: '#E4D192',
-                                },
-                            ],
-                        },
-                    ]
-                },
-                {
-                    id: 'C',
-                    text: 'Admin Pages',
-                    type: 'header',
-                    children: [
-                        {
-                            id   : 'CA',
-                            text : 'Users',
-                            type : 'link',
-                            link : '/admin/users',
-                            color: '#80558C',
-                        },
-                        {
-                            id   : 'CB',
-                            text : 'Groups',
-                            type : 'link',
-                            link : '/admin/groups',
-                            color: '#54BAB9',
-                        },
-                        {
-                            id   : 'CC',
-                            text : 'User Groups',
-                            type : 'link',
-                            link : '/admin/user-groups',
-                            color: '#6E85B7',
-                        },
-                    ],
-                }
-            ]
-    };
 
-        this._sidebarService.setSidebarObject (sidebar);
+                if (status && status.sidebarItems) {
+                    sidebar.children = status.sidebarItems;
+                }
+
+                this._sidebarService.setSidebarObject(sidebar);
+            }
+        )
     }
 
     ngOnDestroy (): void {
         this.$onDestroy.next (true);
+        this.$onDestroy.complete();
     }
 
 }

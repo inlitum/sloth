@@ -1,4 +1,4 @@
-<div class="sloth-sidebar">
+<div class="sloth-sidebar" *ngIf="sidebar && sidebar.type != 'hidden'">
     <div class="sidebar-header">SLOTH</div>
     <div class="sidebar-content">
         <div class="sidebar-content-top" *ngIf="sidebar && sidebar.children">

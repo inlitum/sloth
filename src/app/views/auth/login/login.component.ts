@@ -1,35 +1,34 @@
-import { HttpClient }          from '@angular/common/http';
 import { Component, OnInit }   from '@angular/core';
-import { User }                from '../../../models/user.model';
+import { UserSession }         from '../../../models/user-session.model';
+import { AuthService }         from '../../../services/auth.service';
+import { SidebarService }      from '../../../services/sidebar.service';
 import { SlothBackendService } from '../../../services/sloth-backend.service';
 
-@Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
-})
+@Component ({
+                selector   : 'app-login',
+                templateUrl: './login.component.html',
+                styleUrls  : [ './login.component.scss' ],
+            })
 export class LoginComponent implements OnInit {
 
-  constructor(
-    private _slothBackend: SlothBackendService,
-    private _httpClient: HttpClient
-  ) { }
+    constructor (
+        private _sloth: SlothBackendService,
+        private _authService: AuthService,
+        private _sidebarService: SidebarService
+    ) { }
 
-  ngOnInit(): void {
-  }
+    ngOnInit (): void {
+        this._sidebarService.setVisibility('hidden');
 
-  login() {
-    let user = new User({});
-    user.email = "jackborrie@hotmail.com";
-    user.password = "su";
+        this._authService.dirtySession();
+    }
 
-    this._slothBackend.login(user);
-  }
+    login () {
+        let user      = new UserSession ({});
+        user.email    = 'jackborrie@hotmail.com';
+        user.password = 'su';
 
-  test () {
-    this._httpClient.get('http://localhost:3333/api/admin/users').subscribe((e) => {
-      console.log(e)
-    })
-  }
+        this._authService.login (user);
+    }
 
 }

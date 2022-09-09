@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router }            from '@angular/router';
 import { Meta }              from '../../../models/meta.model';
-import { User }              from '../../../models/user.model';
+import { UserSession }       from '../../../models/user-session.model';
 import { UsersService }      from '../../../services/users.service';
 
 @Component ({
@@ -11,7 +11,7 @@ import { UsersService }      from '../../../services/users.service';
             })
 export class AdminUserSearchComponent implements OnInit {
 
-    public users: User[]         = [];
+    public users: UserSession[]  = [];
     public userMeta: Meta | null = null;
     public currentPage: number   = 1;
     public pageSize: number      = 22;
@@ -41,7 +41,7 @@ export class AdminUserSearchComponent implements OnInit {
                 username: `jack ${ i }`,
                 email   : `jack${ i }@email.com`,
             }
-            this.users.push (new User (data));
+            this.users.push (new UserSession (data));
 
         }
 
