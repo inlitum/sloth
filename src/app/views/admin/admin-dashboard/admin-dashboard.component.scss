@@ -1,4 +1,5 @@
 @use "../../../base";
+@use "sass:math";
 
 .admin-dashboard {
     width: 100%;
@@ -28,7 +29,7 @@
     background: transparent;
     border: base.$border;
     height: base.$navbar-height;
-    width: base.$sidebar-width / 1.5;
+    width: math.div(base.$sidebar-width, 1.5);
     color: base.$foreground-color;
 }
 

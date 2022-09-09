@@ -8,6 +8,7 @@ import { SlothNavbarComponent }                                                 
 import { SlothSidebarItemComponent }                                                    from './sloth-sidebar-item/sloth-sidebar-item.component';
 import { SlothSidebarComponent }                                                        from './sloth-sidebar/sloth-sidebar.component';
 import { SlothTableComponent, TableHeaderTemplateDirective, TableRowTemplateDirective } from './sloth-table/sloth-table.component';
+import { SlothDropdownComponent } from './sloth-dropdown/sloth-dropdown.component';
 
 @NgModule ({
                declarations: [
@@ -20,6 +21,7 @@ import { SlothTableComponent, TableHeaderTemplateDirective, TableRowTemplateDire
                    TableHeaderTemplateDirective,
                    TableRowTemplateDirective,
                    SlothSidebarItemComponent,
+                   SlothDropdownComponent,
                ],
                exports: [
                    CardComponent,
