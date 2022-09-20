@@ -10,7 +10,7 @@
                     </h2>
                     <div class="ms-auto me-0">
                         <!-- Actions -->
-                        <button (click)="createAccount()" class="h-100 sloth-button px-2">
+                        <button (click)="showAccountCreationModal()" class="h-100 sloth-button px-2">
                             Create
                             <i class="fas fa-plus"></i>
                         </button>
@@ -23,10 +23,12 @@
                             <div #gridContainer class="grid-container">
                                 <div class="accounts">
                                     <ng-container *ngIf="loaded">
-                                        <div class="account" (click)="openAccount(account.id)" *ngFor="let account of accounts">
-                                            <h5>{{ account.name }}</h5>
-                                            <h6>{{ account.initialBalance }}</h6>
-                                        </div>
+                                        <ng-container  *ngFor="let account of accounts">
+                                            <div class="account" *ngIf="account.accountId" (click)="openAccount(account.accountId)">
+                                                <h5>{{ account.accountName }}</h5>
+                                                <h6>{{ account.balance | currency }}</h6>
+                                            </div>
+                                        </ng-container>
                                     </ng-container>
                                 </div>
                             </div>
@@ -39,5 +41,21 @@
 </ng-container>
 
 <sloth-modal>
-    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Suscipit ab debitis dolor a laborum. Obcaecati laboriosam, sint corrupti vitae libero ipsum earum architecto animi? Quaerat eum maiores ad consequuntur est tempora assumenda possimus iusto.
+    <form [formGroup]="accountCreationForm" class="accounts-form">
+        <h2>account</h2>
+
+        <div class="form-group">
+            <label for="name">name: </label>
+            <input id="name" class="sloth-input pull-right" type="text" formControlName="name">
+        </div>
+
+        <div class="form-group">
+            <label for="startingAmount">starting Amount: </label>
+            <input id="startingAmount" class="sloth-input pull-right" type="text" formControlName="startingAmount">
+        </div>
+    </form>
+
+    <div class="form-group">
+        <button class="sloth-button pull-right" (click)="createAccount()">Create</button>
+    </div>
 </sloth-modal>

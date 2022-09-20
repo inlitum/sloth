@@ -13,27 +13,30 @@ import { PrettyCurrencyPipe }       from './pipes/pretty-currency.pipe';
 import { ViewsModule }              from './views/views.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    SlothColumnNameDirective,
-    PrettyCurrencyPipe,
-  ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    RouterModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    ViewsModule,
-    ComponentsModule
-  ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true
-    }
-  ],
-  bootstrap: [AppComponent]
-})
+              declarations: [
+                  AppComponent,
+                  SlothColumnNameDirective,
+                  PrettyCurrencyPipe,
+              ],
+              imports     : [
+                  BrowserModule,
+                  HttpClientModule,
+                  RouterModule,
+                  AppRoutingModule,
+                  BrowserAnimationsModule,
+                  ViewsModule,
+                  ComponentsModule,
+              ],
+              providers   : [
+                  {
+                      provide : HTTP_INTERCEPTORS,
+                      useClass: AuthInterceptor,
+                      multi   : true,
+                  },
+              ],
+              exports     : [
+                  PrettyCurrencyPipe,
+              ],
+              bootstrap   : [ AppComponent ],
+          })
 export class AppModule { }

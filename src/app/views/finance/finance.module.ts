@@ -1,8 +1,9 @@
-import { CommonModule } from "@angular/common";
-import { NgModule } from "@angular/core";
-import { ComponentsModule } from "src/app/components/components.module";
-import { PrettyCurrencyPipe } from "src/app/pipes/pretty-currency.pipe";
-import { BankAccountsComponent } from "./bank-accounts/bank-accounts.component";
+import { CommonModule }          from '@angular/common';
+import { NgModule }              from '@angular/core';
+import { ReactiveFormsModule }   from '@angular/forms';
+import { ComponentsModule }      from 'src/app/components/components.module';
+import { PrettyCurrencyPipe }    from 'src/app/pipes/pretty-currency.pipe';
+import { BankAccountsComponent } from './bank-accounts/bank-accounts.component';
 
 @NgModule ({
     declarations: [
@@ -14,10 +15,11 @@ import { BankAccountsComponent } from "./bank-accounts/bank-accounts.component";
     providers: [
         PrettyCurrencyPipe
     ],
-    imports: [
-        CommonModule,
-        ComponentsModule
-    ]
-})
+               imports: [
+                   CommonModule,
+                   ComponentsModule,
+                   ReactiveFormsModule,
+               ],
+           })
 export class FinanceModule {
 }

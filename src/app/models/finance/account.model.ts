@@ -1,55 +1,48 @@
-import { Model }       from '../model';
+import { Model } from '../model';
 
 export class Account extends Model {
 
-    private _id: number                     = 0;
-    private _name: string                   = '';
-    private _initialBalance: number          = 0;
-    private _userId: number                 = 0;
-    // private _transactions: Transaction[]    = [];
+    private _accountId: number | null   = null;
+    private _accountName: string | null = null;
+    private _balance: number | null     = null;
+    private _userId: number | null      = null;
 
-    get id (): number {
-        return this._id;
+    get accountId (): number | null {
+        return this._accountId;
     }
 
-    set id (value: number) {
-        this._id = value;
+    set accountId (value: number | null) {
+        this._accountId = value;
     }
 
-    get name (): string {
-        return this._name;
+    get accountName (): string | null {
+        return this._accountName;
     }
 
-    set name (value: string) {
-        this._name = value;
+    set accountName (value: string | null) {
+        this._accountName = value;
     }
 
-    get initialBalance (): number {
-        return this._initialBalance;
+    get balance (): number | null {
+        return this._balance;
     }
 
-    set initialBalance (value: number) {
-        this._initialBalance = value;
+    set balance (value: number | null) {
+        this._balance = value;
     }
 
-    get userId (): number {
+    get userId (): number | null {
         return this._userId;
     }
 
-    set userId (value: number) {
+    set userId (value: number | null) {
         this._userId = value;
     }
 
-    // get transactions (): Transaction[] {
-    //     return this._transactions;
-    // }
-
-    // set transactions (value: Transaction[]) {
-    //     this._transactions = value;
-    // }
-
-    constructor (data: { [ key: string ]: any }) {
+    constructor (data: { [key: string]: any } | null = null) {
         super ();
-        this.processJson (data);
+        if (data != null) {
+            this.processJson (data);
+        }
     }
 }

@@ -1,3 +1,5 @@
+@use '../../../base';
+
 .accounts-card-wrapper {
     height: 100%;
     display: grid;
@@ -43,4 +45,23 @@
 
 .account:active {
     background: rgba(0,0,0,0.4);
+}
+
+.accounts-form {
+    width: auto;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: row;
+    margin-top: 1rem;
+}
+
+.form-group > label {
+    margin-right: 1rem;
+}
+
+.form-group > .pull-right {
+    margin-left: auto;
+    margin-right: 0;
 }
