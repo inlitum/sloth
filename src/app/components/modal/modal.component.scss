@@ -14,16 +14,16 @@
 
     /* z-index must be higher than .jw-modal-background */
     z-index: 1000;
-    
+
     /* enables scrolling for tall modals */
     overflow: auto;
-    
+
     display: flex;
     justify-content: center;
     align-items: center;
 
     .sloth-modal-body {
-        width: 50%;
+        width: fit-content;
         z-index: 1002;
     }
 
@@ -43,7 +43,7 @@
     /* semi-transparent black  */
     background-color: #000;
     opacity: 0.75;
-    
+
     /* z-index must be below .jw-modal and above everything else  */
     z-index: 900;
 }
