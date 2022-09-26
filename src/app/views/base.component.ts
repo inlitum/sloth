@@ -1,8 +1,7 @@
-import { SlothBackendService }                    from '../services/sloth-backend.service';
-import { Component, Injector, OnDestroy, OnInit } from "@angular/core";
-import { Subject, Subscription }                  from "rxjs";
-import { AppInjector }           from '../app.module';
-import { AuthService }           from "../services/auth.service";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription }                 from 'rxjs';
+import { AppInjector }                  from '../app.module';
+import { AuthService }                  from '../services/auth.service';
 
 @Component ( {
     selector:    'app-base-component',
@@ -25,6 +24,7 @@ export abstract class BaseComponent implements OnInit, OnDestroy{
 
     public ngOnDestroy () {
         this.subscriptions.unsubscribe();
+        this.onDestroy();
     }
 
     public ngOnInit (): void {
@@ -32,4 +32,5 @@ export abstract class BaseComponent implements OnInit, OnDestroy{
     }
 
     public abstract onInit(): void;
+    public abstract onDestroy(): void;
 }

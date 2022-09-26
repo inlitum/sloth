@@ -1,0 +1,20 @@
+.account-wrapper {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+    //padding-bottom: 1.5rem;
+}
+
+.account-details-container {
+    width: 30%;
+    margin-right: 1.5rem;
+}
+
+.account-transactions-container {
+    height: 100%;
+    width: 70%;
+}
+
+
