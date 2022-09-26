@@ -9,8 +9,9 @@ import { AdminUserDetailsComponent }     from './views/admin/admin-user-details/
 import { AdminUserGroupSearchComponent } from './views/admin/admin-user-group-search/admin-user-group-search.component';
 import { AdminUserSearchComponent }      from './views/admin/admin-user-search/admin-user-search.component';
 import { LoginComponent }                from './views/auth/login/login.component';
-import { BankAccountsComponent }         from './views/finance/bank-accounts/bank-accounts.component';
 import { HomeComponent }                 from './views/home/home.component';
+import { AccountsSearchComponent }       from "./views/finance/accounts-search/accounts-search-component";
+import { AccountDetailsComponent }       from "./views/finance/account-details/account-details.component";
 
 const routes: Routes = [
     {
@@ -24,12 +25,15 @@ const routes: Routes = [
         children        : [
             {
                 path       : 'finance',
-                component  : BankAccountsComponent,
                 children   : [
                     {
-                        path     : 'accounts',
-                        component: BankAccountsComponent,
+                        path: 'account/:id',
+                        component: AccountDetailsComponent
                     },
+                    {
+                        path     : 'accounts',
+                        component: AccountsSearchComponent,
+                    }
                 ],
                 canActivate: [ FinanceGuard ],
             },

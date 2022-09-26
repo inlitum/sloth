@@ -80,6 +80,8 @@ export class SlothBackendService {
                                return;
                            }
 
+                           console.log(resourceType)
+
                            return new resourceType (response);
                        }),
                        tap (() => {

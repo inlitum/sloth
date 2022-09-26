@@ -16,6 +16,10 @@ export class AccountsService {
         return this._sloth.getList (`accounts`, Account, {})
     }
 
+    public getAccount (accountId: number): Observable<Account> {
+        return this._sloth.getOne(`accounts/${accountId}`, Account, {});
+    }
+
     public createAccount (account: { account_name: string, starting_amount: number }): Observable<Account> {
         return this._sloth.post (`accounts`, account, {});
     }

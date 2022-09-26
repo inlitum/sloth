@@ -1,5 +1,5 @@
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { NgModule }                            from '@angular/core';
+import { Injector, NgModule }                  from '@angular/core';
 import { BrowserModule }                       from '@angular/platform-browser';
 import { BrowserAnimationsModule }             from '@angular/platform-browser/animations';
 import { RouterModule }                        from '@angular/router';
@@ -39,4 +39,10 @@ import { ViewsModule }              from './views/views.module';
               ],
               bootstrap   : [ AppComponent ],
           })
-export class AppModule { }
+export class AppModule {
+    constructor (private injector: Injector) {
+        AppInjector = this.injector;
+    }
+
+}
+export let AppInjector: Injector;

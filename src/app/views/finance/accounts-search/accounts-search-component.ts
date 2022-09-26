@@ -5,13 +5,14 @@ import { ModalComponent }                                                       
 import { Account }                                                                                             from 'src/app/models/finance/account.model';
 import { AccountsService }                                                                                     from '../../../services/data-services/accounts.service';
 import { HeaderService }                                                                                       from '../../../services/header.service';
+import { Router }                                                                                              from "@angular/router";
 
 @Component ({
-                selector   : 'app-bank-accounts',
-                templateUrl: './bank-accounts.component.html',
-                styleUrls  : [ './bank-accounts.component.scss' ],
+                selector   : 'app-accounts',
+                templateUrl: './accounts-search.component.html',
+                styleUrls  : [ './accounts-search.component.scss' ],
             })
-export class BankAccountsComponent implements OnInit, AfterViewInit {
+export class AccountsSearchComponent implements OnInit, AfterViewInit {
 
     @ViewChild (ModalComponent)
     modal!: ModalComponent
@@ -35,6 +36,7 @@ export class BankAccountsComponent implements OnInit, AfterViewInit {
 
     constructor (
         private _renderer: Renderer2,
+        private _router: Router,
         private _changeDetector: ChangeDetectorRef,
         private _accountsService: AccountsService,
         private _headerService: HeaderService,
@@ -63,7 +65,7 @@ export class BankAccountsComponent implements OnInit, AfterViewInit {
     }
 
     openAccount (accountId: number) {
-        console.log (accountId);
+        this._router.navigate(['finance', 'account', accountId])
     }
 
     @HostListener ('window:resize')

@@ -99,10 +99,10 @@ export class AuthService {
             })
     }
 
-    public fetchStatus () {
+    public fetchStatus () {~
         this._headerService.startLoadingForKey ('status');
         this._sloth.getOne ('__status', Status, {})
-            .subscribe (result => {
+            .subscribe ((result: Status) => {
                 this._status = result;
                 this.status$.next (result);
                 this._localStorage.set ('status', JSON.stringify (result));
@@ -120,6 +120,14 @@ export class AuthService {
         this.status$.next (null);
 
         this._localStorage.remove ('session');
+    }
+
+    public hasAdminRead (): boolean {
+        if (!this.status) return false;
+
+        console.log(this.status)
+
+        return false;
     }
 
 
