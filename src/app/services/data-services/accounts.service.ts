@@ -23,4 +23,8 @@ export class AccountsService {
     public createAccount (account: { account_name: string, starting_amount: number }): Observable<Account> {
         return this._sloth.post (`accounts`, account, {});
     }
+
+    public updateAccount (account: Account): Observable<Account> {
+        return this._sloth.put(`accounts/${account.accountId}`, account.toHttpParams(), {});
+    }
 }

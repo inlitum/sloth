@@ -1,5 +1,6 @@
 import { Component }       from '@angular/core';
 import { ActivatedRoute }  from '@angular/router';
+import { clone as _clone } from 'lodash';
 import { finalize }        from 'rxjs';
 import { Account }         from '../../../models/finance/account.model';
 import { AccountsService } from '../../../services/data-services/accounts.service';
@@ -14,6 +15,9 @@ import { BaseComponent }   from '../../base.component';
 export class AccountDetailsComponent extends BaseComponent {
 
     public account: Account | null = null;
+
+    private _originalAccountName: string = '';
+    modified: boolean                    = false;
 
     constructor (
         private _route: ActivatedRoute,
@@ -47,10 +51,43 @@ export class AccountDetailsComponent extends BaseComponent {
                                      this._header.stopLoadingForKey ('account');
                                  }),
                              ).subscribe (account => {
-                                              this.account = account;
+                                              this.account              = account;
+                                              this._originalAccountName = _clone (account.accountName ?? '');
                                           },
             )
 
-        this.subscriptions.add(accountSub);
+        this.subscriptions.add (accountSub);
+    }
+
+    handleTextChange (text: string) {
+        if (!this.account) {
+            return;
+        }
+
+        if (text !== this._originalAccountName) {
+            this.modified            = true;
+            this.account.accountName = text;
+        }
+    }
+
+    saveAccount () {
+        if (!this.modified || !this.account) {
+            return;
+        }
+
+        this._header.startLoadingForKey ('account-update');
+
+        let accountUpdateSub = this._accountsService.updateAccount (this.account)
+                                   .pipe (
+                                       finalize (() => {
+                                           this._header.stopLoadingForKey ('account-update');
+                                       }),
+                                   )
+                                   .subscribe (account => {
+                                       this.account  = account;
+                                       this.modified = false;
+                                   })
+
+        this.subscriptions.add(accountUpdateSub);
     }
 }
