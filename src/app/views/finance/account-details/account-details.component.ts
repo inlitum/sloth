@@ -6,6 +6,7 @@ import { Account }         from '../../../models/finance/account.model';
 import { AccountsService } from '../../../services/data-services/accounts.service';
 import { HeaderService }   from '../../../services/header.service';
 import { BaseComponent }   from '../../base.component';
+import { Transaction }     from "../../../models/finance/transaction.model";
 
 @Component ( {
     selector:    'app-account-details',
@@ -18,6 +19,8 @@ export class AccountDetailsComponent extends BaseComponent {
 
     private _originalAccountName: string = '';
     modified: boolean                    = false;
+
+    transactions: Transaction[] = [];
 
     constructor (
         private _route: ActivatedRoute,
@@ -53,6 +56,7 @@ export class AccountDetailsComponent extends BaseComponent {
                              ).subscribe ( account => {
                 this.account              = account;
                 this._originalAccountName = _clone ( account.accountName ?? '' );
+                this.transactions         = account.transactions;
             },
         )
 

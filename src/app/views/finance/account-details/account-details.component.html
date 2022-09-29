@@ -2,18 +2,35 @@
     <div class="account-wrapper">
         <sloth-card class="account-details-container">
             <div class="account-name-wrapper">
-                <sloth-editable-label [text]="account.accountName ?? ''" (textChanged)="handleTextChange($event)"></sloth-editable-label>
+                <sloth-editable-label [text]="account.accountName ?? ''"
+                                      (textChanged)="handleTextChange($event)"></sloth-editable-label>
             </div>
-<!--            <div class="audit-wrapper">-->
-<!--                <input type="text" class="sloth-input" disabled [value]="account.updateDate">-->
-<!--                <input type="text" class="sloth-input" disabled [value]="account.creationDate">-->
-<!--            </div>-->
+            <!--            <div class="audit-wrapper">-->
+            <!--                <input type="text" class="sloth-input" disabled [value]="account.updateDate">-->
+            <!--                <input type="text" class="sloth-input" disabled [value]="account.creationDate">-->
+            <!--            </div>-->
 
             <div class="account-info-actions">
                 <button class="sloth-button info-save" [disabled]="!modified" (click)="saveAccount()">save</button>
             </div>
         </sloth-card>
         <sloth-card class="account-transactions-container">
+            <div class="transactions-wrapper">
+                <sloth-table [data]="transactions">
+                    <ng-template [slothTableHeader]="transactions">
+                        <th>Description</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th></th>
+                    </ng-template>
+                    <ng-template [slothTableRow]="transactions" let-row>
+                        <td>{{ row.description }}</td>
+                        <td>{{ row.amount | currency}}</td>
+                        <td>{{ row.updateDate }}</td>
+                        <td></td>
+                    </ng-template>
+                </sloth-table>
+            </div>
         </sloth-card>
     </div>
 </ng-container>
