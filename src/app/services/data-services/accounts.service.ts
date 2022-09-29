@@ -25,6 +25,6 @@ export class AccountsService {
     }
 
     public updateAccount (account: Account): Observable<Account> {
-        return this._sloth.put(`accounts/${account.accountId}`, account.toHttpParams(), {});
+        return this._sloth.put(`accounts/${account.accountId}`, account.toHttpParams(), Account, {});
     }
 }

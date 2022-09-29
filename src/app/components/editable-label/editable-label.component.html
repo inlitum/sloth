@@ -1,17 +1,19 @@
-<div class="editable-label-wrapper" (click)="handleClick($event)">
+<div class="editable-label-wrapper">
     <div [hidden]="!editing" class="editable-input-container">
-        <input #accountName type="text" class="sloth-input" [(ngModel)]="text" (keyup)="handleKeyUp($event)" (focusout)="handleFocusOut()">
+        <input #accountName type="text" class="sloth-input" [(ngModel)]="text" (keyup)="handleKeyUp($event)"
+               (focusout)="handleFocusOut()">
     </div>
-    <div [hidden]="editing" class="editable-label-container">
+    <div [hidden]="editing" class="editable-label-container" (click)="handleLabelClick($event)">
         {{text}}
     </div>
-    <div class="action">
-        <button class="sloth-icon-button squared-button" (click)="handleEditButtonClick($event)">
-            <i class="fas fa-pencil" *ngIf="!editing"></i>
-            <i class="fas fa-check" *ngIf="editing"></i>
-        </button>
-        <button class="sloth-icon-button squared-button" [hidden]="!modified" (click)="handleRevertButton($event)">
-            <i class="fas fa-rotate"></i>
-        </button>
-    </div>
+    <button class="sloth-icon-button squared-button" [hidden]="!modified" (click)="revertInput()">
+        <i class="fas fa-rotate"></i>
+    </button>
+    <button #save class="sloth-icon-button squared-button" *ngIf="!disabled && editing" (mousedown)="clicking(true)"
+            (mouseup)="clicking(false)">
+        <i class="fas fa-check"></i>
+    </button>
+    <button class="sloth-icon-button squared-button" *ngIf="!disabled && !editing" (mouseup)="toggleEditing (true)">
+        <i class="fas fa-pencil"></i>
+    </button>
 </div>

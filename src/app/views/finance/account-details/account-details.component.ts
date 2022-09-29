@@ -7,11 +7,11 @@ import { AccountsService } from '../../../services/data-services/accounts.servic
 import { HeaderService }   from '../../../services/header.service';
 import { BaseComponent }   from '../../base.component';
 
-@Component ({
-                selector   : 'app-account-details',
-                templateUrl: './account-details.component.html',
-                styleUrls  : [ './account-details.component.scss' ],
-            })
+@Component ( {
+    selector:    'app-account-details',
+    templateUrl: './account-details.component.html',
+    styleUrls:   [ './account-details.component.scss' ],
+} )
 export class AccountDetailsComponent extends BaseComponent {
 
     public account: Account | null = null;
@@ -31,63 +31,67 @@ export class AccountDetailsComponent extends BaseComponent {
     }
 
     onInit (): void {
-        let routeSub = this._route.params.subscribe (params => {
-            const id = params['id'];
-            if (!id) {
+        let routeSub = this._route.params.subscribe ( params => {
+            const id = params[ 'id' ];
+            if ( !id ) {
                 return;
             }
 
-            this.fetchAccount (id);
-        })
+            this.fetchAccount ( id );
+        } )
 
-        this.subscriptions.add (routeSub);
+        this.subscriptions.add ( routeSub );
     }
 
-    private fetchAccount (accountId: number) {
-        this._header.startLoadingForKey ('account');
-        let accountSub = this._accountsService.getAccount (accountId)
+    private fetchAccount ( accountId: number ) {
+        this._header.startLoadingForKey ( 'account' );
+        let accountSub = this._accountsService.getAccount ( accountId )
                              .pipe (
-                                 finalize (() => {
-                                     this._header.stopLoadingForKey ('account');
-                                 }),
-                             ).subscribe (account => {
-                                              this.account              = account;
-                                              this._originalAccountName = _clone (account.accountName ?? '');
-                                          },
-            )
+                                 finalize ( () => {
+                                     this._header.stopLoadingForKey ( 'account' );
+                                 } ),
+                             ).subscribe ( account => {
+                this.account              = account;
+                this._originalAccountName = _clone ( account.accountName ?? '' );
+            },
+        )
 
-        this.subscriptions.add (accountSub);
+        this.subscriptions.add ( accountSub );
     }
 
-    handleTextChange (text: string) {
-        if (!this.account) {
+    handleTextChange ( text: string ) {
+        if ( !this.account ) {
             return;
         }
 
-        if (text !== this._originalAccountName) {
+        if ( text !== this._originalAccountName ) {
             this.modified            = true;
             this.account.accountName = text;
         }
     }
 
     saveAccount () {
-        if (!this.modified || !this.account) {
+        if ( !this.account ) {
             return;
         }
 
-        this._header.startLoadingForKey ('account-update');
+        if ( !this.modified ) {
+            return;
+        }
 
-        let accountUpdateSub = this._accountsService.updateAccount (this.account)
+        this._header.startLoadingForKey ( 'account-update' );
+
+        let accountUpdateSub = this._accountsService.updateAccount ( this.account )
                                    .pipe (
-                                       finalize (() => {
-                                           this._header.stopLoadingForKey ('account-update');
-                                       }),
+                                       finalize ( () => {
+                                           this._header.stopLoadingForKey ( 'account-update' );
+                                       } ),
                                    )
-                                   .subscribe (account => {
+                                   .subscribe ( account => {
                                        this.account  = account;
                                        this.modified = false;
-                                   })
+                                   } )
 
-        this.subscriptions.add(accountUpdateSub);
+        this.subscriptions.add ( accountUpdateSub );
     }
 }
